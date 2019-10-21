@@ -152,11 +152,11 @@ PRIVATE_MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media/private')
 
 EMAIL_SUBJECT_PREFIX = '[Colossus] '
 
-SERVER_EMAIL = config('SERVER_EMAIL', default='root@localhost')
+#SERVER_EMAIL = config('SERVER_EMAIL', default='root@localhost')
 
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='testforcolossus@gmail.com')
 
-EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 
