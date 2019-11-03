@@ -45,8 +45,8 @@ def dashboard(request):
 
 
 def setup(request):
-    if User.objects.exists() or MailingList.objects.exists():
-        return redirect('dashboard')
+    # if User.objects.exists() or MailingList.objects.exists():
+    #     return redirect('dashboard')
 
     site = Site.objects.get(pk=django_settings.SITE_ID)
     if site.domain == 'example.com':
@@ -57,8 +57,8 @@ def setup(request):
 
 
 def setup_account(request):
-    if User.objects.exists() or MailingList.objects.exists():
-        return redirect('dashboard')
+    # if User.objects.exists() or MailingList.objects.exists():
+    #     return redirect('dashboard')
 
     if request.method == 'POST':
         form = AdminUserCreationForm(data=request.POST)
@@ -70,6 +70,7 @@ def setup_account(request):
     else:
         form = AdminUserCreationForm()
     return render(request, 'core/setup_account.html', {'form': form})
+
 
 
 def subscribe_shortcut(request, mailing_list_slug):
