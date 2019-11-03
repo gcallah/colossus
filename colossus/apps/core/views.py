@@ -71,6 +71,7 @@ def setup_account(request):
         form = AdminUserCreationForm()
     return render(request, 'core/setup_account.html', {'form': form})
 
+
 def subscribe_shortcut(request, mailing_list_slug):
     mailing_list = get_object_or_404(MailingList, slug=mailing_list_slug)
     return redirect('subscribers:subscribe', mailing_list_uuid=mailing_list.uuid)

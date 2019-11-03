@@ -7,3 +7,4 @@ tests: FORCE
 	cd core; make tests
 	cd notifications; make tests
 	cd subscribers; make tests
+#cd templates; make tests
