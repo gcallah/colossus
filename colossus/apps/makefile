@@ -1,4 +1,6 @@
-tests:
+FORCE:
+
+tests: FORCE
 	cd accounts; make tests
 	cd campaigns; make tests
 	cd lists; make tests
