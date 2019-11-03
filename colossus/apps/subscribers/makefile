@@ -1,5 +1,6 @@
 TESTDIR = tests
 PYLINT = flake8
+PYLINTFLAGS = 
 PYTHONFILES = $(shell ls *.py)
 TEST_FILES = $(shell ls $(TESTDIR)/test_*.py)
 export user_type = test
@@ -18,7 +19,7 @@ lint: $(patsubst %.py,%.pylint,$(PYTHONFILES))
 tests: lint
 
 %.pylint:
-	$(PYLINT) $*.py
+	$(PYLINT) $(PYLINTFLAGS) $*.py
 
 nocrud:
 	-rm *~
