@@ -13,10 +13,10 @@ prod: tests
 
 lint: $(patsubst %.py,%.pylint,$(PYTHONFILES))
 
-pytests: $(PYTHONFILES)
-	./pytests.sh
+#pytests: $(PYTHONFILES)
+#./pytests.sh
 
-tests: pytests lint
+tests: lint
 
 %.pylint:
 	$(PYLINT) $(PYLINTFLAGS) $*.py
@@ -34,6 +34,3 @@ nocrud:
 
 
 tests: FORCE
-	cd APIServer; make tests
-	cd indra; make tests
-	cd models; make tests
