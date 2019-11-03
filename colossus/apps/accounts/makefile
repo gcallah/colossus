@@ -14,15 +14,12 @@ prod: tests
 lint: $(patsubst %.py,%.pylint,$(PYTHONFILES))
 
 #pytests: $(PYTHONFILES)
-	#./pytests.sh
+	#./pytests.sh 
 
-#tests: pytests lint
+tests: lint
 
 %.pylint:
 	$(PYLINT) $(PYLINTFLAGS) $*.py
-
-test_used_cars:
-	nosetests tests.test_used_cars --nocapture
 
 nocrud:
 	-rm *~
@@ -33,7 +30,4 @@ nocrud:
 	-rm $(TESTDIR)/*~
 
 
-tests: FORCE
-	cd APIServer; make tests
-	cd indra; make tests
-	cd models; make tests
+tests: FORCE	
