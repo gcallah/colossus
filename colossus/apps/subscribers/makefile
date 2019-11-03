@@ -1,6 +1,5 @@
 TESTDIR = tests
 PYLINT = flake8
-PYLINTFLAGS = --ignore=E741,W503 --exclude=interactive.py,__main__.py,scheduler.py
 PYTHONFILES = $(shell ls *.py)
 TEST_FILES = $(shell ls $(TESTDIR)/test_*.py)
 export user_type = test
@@ -19,10 +18,7 @@ lint: $(patsubst %.py,%.pylint,$(PYTHONFILES))
 tests: lint
 
 %.pylint:
-	$(PYLINT) $(PYLINTFLAGS) $*.py
-
-test_used_cars:
-	nosetests tests.test_used_cars --nocapture
+	$(PYLINT) $*.py
 
 nocrud:
 	-rm *~
