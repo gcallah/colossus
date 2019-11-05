@@ -1,0 +1,7 @@
+There is a problem with setting the allowed host to the Heroku page.  Right now I am trying to figure out how to correctly set it up.
+
+The problem seems to be solved through the settings.py file changing the allowed hosts.  I created my own repo to test heroku deployment.
+
+The steps are simple in which a user gets a heroku account set up. Within the site there is an option to connect with a repo connected with your account.  Once this is established, run app can begin.
+
+First step is to set up the allowed host 
