@@ -19,6 +19,7 @@ SECRET_KEY = config('SECRET_KEY', default=string.ascii_letters)
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS.append('colossus.pythonanywhere.com')
 
 INSTALLED_APPS = [
     'django.contrib.auth',
