@@ -1,3 +1,21 @@
+<style type="text/css">
+ul {
+background: #3399ff;
+padding: 20px;
+}
+ul li {
+  background: #cce5ff;
+  margin: 5px;
+}
+p.work-done {
+  color: green;
+}
+p.work-in-progress{
+  color: red;
+}
+
+</style>
+
 <html>
     <head>
         <title>
@@ -10,23 +28,30 @@
             NYC Newsletter Project
         </h1>
 
-        <p>
+        <p  class = "work-done">
         Work completed:
         </p>
 
         <ul>
             <li>
-                207 unit tests are running under the control of make.
+                Unit testing was setup for the application which enables us to run 207 unit tests under the control of make.
             </li>
 
             <li>
+                Added SMTP support which which allows us to send emails successfully.
             </li>
 
             <li>
+                Established a connection to database which helps in storing account details. This permits users to login.
             </li>
+
+            <li>
+                Successfully launched the web app on Python Anywhere.
+            </li>
+
         </ul>
 
-        <p>
+        <p class = "work-in-progress">
         Work in progress:
         </p>
 
@@ -36,10 +61,13 @@
             </li>
 
             <li>
+                Implementing Travis which would help in testing the application with every change.
             </li>
 
             <li>
+                Working on the Static files of the Application.
             </li>
+
         </ul>
 
     </body>
