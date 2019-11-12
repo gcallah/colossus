@@ -16,6 +16,7 @@ from colossus.apps.lists.models import MailingList
 from colossus.apps.subscribers.constants import ActivityTypes
 from colossus.apps.subscribers.models import Activity
 
+# User = get_user_model().SAMLAuthen()
 User = get_user_model()
 
 
@@ -45,8 +46,10 @@ def dashboard(request):
 
 
 def setup(request):
-    # if User.objects.exists() or MailingList.objects.exists():
-    #     return redirect('dashboard')
+    # if user.saml() == true
+    # return redirect('dashboard')
+    if User.objects.exists() or MailingList.objects.exists():
+        return redirect('dashboard')
 
     site = Site.objects.get(pk=django_settings.SITE_ID)
     if site.domain == 'example.com':
@@ -57,8 +60,10 @@ def setup(request):
 
 
 def setup_account(request):
-    # if User.objects.exists() or MailingList.objects.exists():
-    #     return redirect('dashboard')
+    # if user.saml() == true
+    # return redirect('dashboard')
+    if User.objects.exists() or MailingList.objects.exists():
+        return redirect('dashboard')
 
     if request.method == 'POST':
         form = AdminUserCreationForm(data=request.POST)
