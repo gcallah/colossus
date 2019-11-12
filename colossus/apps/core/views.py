@@ -16,9 +16,9 @@ from colossus.apps.lists.models import MailingList
 from colossus.apps.subscribers.constants import ActivityTypes
 from colossus.apps.subscribers.models import Activity
 
-
-#User = get_user_model().SAMLAuthen()
+# User = get_user_model().SAMLAuthen()
 User = get_user_model()
+
 
 @method_decorator(login_required, name='dispatch')
 class SiteUpdateView(UpdateView):
@@ -46,8 +46,8 @@ def dashboard(request):
 
 
 def setup(request):
-    #if user.saml() == true
-    #  return redirect('dashboard')
+    # if user.saml() == true
+    # return redirect('dashboard')
     if User.objects.exists() or MailingList.objects.exists():
         return redirect('dashboard')
 
@@ -60,8 +60,8 @@ def setup(request):
 
 
 def setup_account(request):
-     #if user.saml() == true
-     #  return redirect('dashboard')
+    # if user.saml() == true
+    # return redirect('dashboard')
     if User.objects.exists() or MailingList.objects.exists():
         return redirect('dashboard')
 
