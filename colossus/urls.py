@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.urls import include, path
+import django_saml2_auth.views
 
 from colossus.apps.core import views as core_views
 
