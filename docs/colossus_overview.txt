@@ -1,0 +1,45 @@
+Login:
+
+	verify by username and password
+	use your email address to reset the password
+
+Dashboard Activity:
+
+	will show the statistics of each campaign (open rates or more)
+
+Campaigns:
+
+	create and send new subscribe emails
+	it's possible to send it directly or at a scheduled time
+
+	when create a new campaign, input the campaign's name
+	load recipients by choosing existed mailing lists and tags;
+	input who is sending this email and his email address (this is not the actual email to send newsletter which is already designated in configuration files);
+	add a subject;
+	choose email templates, WYSYWIG editor is available
+
+	you can also monitor the rate of opening the links (if there is some in the campaign contents)
+
+Mailing Lists:
+	
+	create lists by providing list names and other information;
+	either import subscibers or input them manually
+	can add speciliazed embedded forms, tags, unsubscribe link and modify other settings in every mailing list
+
+Templates:
+
+	create email templates by copy and paste HTML templates
+
+
+Overview:
+
+Create and manage multiple mailing lists;
+Import lists from other providers (csv files or paste email addresses);
+Create reusable email templates;
+Customize sign up pages (subscribe, unsubscribe, thank you page, etc.);
+Default double opt-in for sign ups;
+Schedule email campaign to send on a specific date and time;
+Track email opens and clicks;
+Change link URL after email is sent;
+Reports with geolocation;
+Compatible with Mailgun, SendGrid, Mandrill, or any other SMTP email service.
