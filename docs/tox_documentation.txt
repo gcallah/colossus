@@ -1,0 +1,63 @@
+Tox Documentation
+
+What is Tox?
+Tox it is a command-line driven automated tester tool for python, based on the virtualenv.  It can be used for either manual testing or continuous integration frameworks with Travis or Jenkins.
+This is mostly used to clean up code to make sure any simple coding mistakes were found.  While we have tests that were used to determine if code is working this seems to make sure that the code is in order.  This seems to be a tool mostly for making the code look neat.
+
+
+Parts of the Tox.in.  What they do?
+
+line 2
+Skipsdist = true
+
+This is a flag whether to perform the packaging operation or not.  It is set to true due to tox being used for an application instead of a library.
+
+
+Envlist
+
+A list setup that determines the order of environment list that tox needs to do.  In the tox file the envlist is set to py3, flake8, isort, mypy and docs.  Th
+
+
+line 11
+basepython = python3
+
+This is the name or path to a Python interpreter that will be used to create a virtual environment.  This is used to mostly to specify what type of environment tox will be run in.
+
+
+lines 14-15
+deps = -r{toxinidir}/requirements/tests.txt
+commands = coverage run manage.py test --settings=colossus.settings
+
+This part of code is used to run the coverage command on the python files.  This is used to find parts of code that could have been tested.  It is used mostly as a tool to find any part of code that wasn't tested and notify users about it. Useful for finding any potential parts of code that need to be covered.
+
+
+lines 18-19
+deps = flake8
+commands = flake8 colossus
+
+This part of the code is merely to run the flake8 command on the python files in colossus.  It is used to see if the the python files meet the standards of pep8.
+
+lines 22-23
+Deps = isort
+commands = isort --recursive --diff colossus
+
+This is merely a command set up to sort imports alphabetically and automatically separated into sections.  This command is done recursively through colossus but this command is to see proposed changes to the files.   It is a command used for sorting imports.
+
+lines 26-27
+Deps = mypy
+commands = mypy colossus
+
+Mypy is a static type checker for python.  This is used to type check python code and find any common bugs.  This is used to see if there are no bugs with any of python files in colossus.
+
+lines 30=34
+usedevelop = false
+whitelist_externals = make
+deps = -{toxinidir}/requirements/docs.txt
+changedir = docs
+commands = make spelling
+
+usedevelop tells the program to install the current package in development mode instead of developing from the sdist package.
+whitelist_externals specifies a command name which can be used in the commands section to prevent "not installed in virtualenv" warning.
+deps is set to the file that is located in the directory located in the current directory of the tox.in file.
+changedir is a command to switch to the docs directory.
+the command seems to be a command used to put wrong spelled words in output.txt in spelling.  It seems to be a file that collected all the spelling mistakes into an output file.
