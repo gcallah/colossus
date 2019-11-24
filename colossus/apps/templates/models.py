@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
+from tinymce.models import HTMLField
 
 from .utils import wrap_blocks
 
@@ -18,7 +19,7 @@ class EmailTemplateManager(models.Manager):
 
 class EmailTemplate(models.Model):
     name = models.CharField(_('name'), max_length=100)
-    content = models.TextField(blank=True)
+    content = HTMLField(default='Please enter your contents here!')
     create_date = models.DateTimeField(_('create date'), auto_now_add=True)
     update_date = models.DateTimeField(_('update date'), default=timezone.now)
     last_used_date = models.DateTimeField(_('last used'), null=True, blank=True)
