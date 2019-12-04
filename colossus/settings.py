@@ -20,6 +20,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
 ALLOWED_HOSTS.append('colossus.pythonanywhere.com')
+ALLOWED_HOSTS.append('colossus.appdev.records.nycnet')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'colossus.apps.lists',
     'colossus.apps.notifications',
     'colossus.apps.subscribers',
+
+    'django_saml2_auth',
 ]
 
 SITE_ID = 1
@@ -156,7 +159,7 @@ EMAIL_SUBJECT_PREFIX = '[Colossus] '
 
 # SERVER_EMAIL = config('SERVER_EMAIL', default='root@localhost')
 
-DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='testforcolossus@gmail.com')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='jocastillo@records.nyc.gov')
 
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 
@@ -164,9 +167,9 @@ EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 
 EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='testforcolossus@gmail.com')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='colossus2019')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
@@ -243,6 +246,47 @@ CELERY_TASK_ALWAYS_EAGER = config('CELERY_TASK_ALWAYS_EAGER', default=True, cast
 
 COLOSSUS_HTTPS_ONLY = config('COLOSSUS_HTTPS_ONLY', default=False, cast=bool)
 
-MAILGUN_API_KEY = config('MAILGUN_API_KEY', default='e13e3189d397370e47fd3c3069c3a32a-e470a504-62090771')
+MAILGUN_API_KEY = config('MAILGUN_API_KEY', default='')
 
 MAILGUN_API_BASE_URL = config('MAILGUN_API_BASE_URL', default='')
+
+
+# ===============================================================================
+# SAML SETTINGS
+# ===============================================================================
+
+SAML_FOLDER = os.path.join(BASE_DIR, 'instance', 'saml')
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'
+
+SAML2_AUTH = {
+    # Metadata is required, choose either remote url or local file path
+    'METADATA_AUTO_CONF_URL': 'https://fidm.us1.gigya.com/saml/v2.0/3_DkZigi2v_eW7z-cZt8PAw-cYWQYg2d8VqABUFRZUhhzxNAdwR5brLl_h8Hqbo7Bm/idp/metadata',
+
+    # Optional settings below
+    'DEFAULT_NEXT_URL': '/dashboard',  # Custom target redirect URL after the user get logged in. Default to /admin if not set. This setting will be overwritten if you have parameter ?next= specificed in the login URL.
+    'CREATE_USER': 'TRUE', # Create a new Django user when a new user logs in. Defaults to True.
+    'NEW_USER_PROFILE': {
+        'USER_GROUPS': [],  # The default group name when a new user logs in
+        'ACTIVE_STATUS': True,  # The default active status for new users
+        'STAFF_STATUS': True,  # The staff status for new users
+        'SUPERUSER_STATUS': False,  # The superuser status for new users
+    },
+    'ATTRIBUTES_MAP': {  # Change Email/UserName/FirstName/LastName to corresponding SAML2 userprofile attributes.
+        'UID': 'GUID',
+        'email': 'mail',
+        'firstName': 'givenName',
+        'lastName': 'sn',
+        'data.mi': 'middleName',
+        'isVerified': 'nycExtEmailValidationFlag',
+    },
+    'TRIGGER': {
+        'CREATE_USER': 'path.to.your.new.user.hook.method',
+        'BEFORE_LOGIN': 'path.to.your.login.hook.method',
+    },
+    'ASSERTION_URL': 'https://mysite.com', # Custom URL to validate incoming SAML requests against
+    'ENTITY_ID': 'https://mysite.com/saml2_auth/acs/', # Populates the Issuer element in authn request
+    'NAME_ID_FORMAT': FormatString, # Sets the Format property of authn NameIDPolicy element
+    'USE_JWT': False, # Set this to True if you are running a Single Page Application (SPA) with Django Rest Framework (DRF), and are using JWT authentication to authorize client users
+    'FRONTEND_URL': 'https://myfrontendclient.com', # Redirect URL for the client if you are using JWT auth with DRF. See explanation below
+}
