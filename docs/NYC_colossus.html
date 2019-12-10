@@ -18,13 +18,20 @@
         <ul>
 
             <li>Allow emails to be sent out</li> 
-            Completed: Completed. Using MailGun. Configuration information in /colossus.settings.py EMAIL SETTINGS and FIRST_PARTY APP SETTINGS
+            Completed: Completed. Using MailGun. Configuration information in /colossus.settings.py EMAIL SETTINGS and FIRST_PARTY APP SETTINGS</br>
+            Currently sent through Joel's email addr: jocastillo@records.nyc.gov
             <li>Allow upload of HTML template in application </li>
+            Completed: template module
             <li>Store newsletter statistics (delivery success / failures) </li>
+            Completed: Dashboard module
             <li>Ability to provide attachments (custom or single attachment)</li>
+            Completed: Campaigns module
             <li>Provide contact list management features (add, edit, remove contacts) </li>
+            Completed: List module
             <li>Includes the ability to manage multiple contact lists</li>
+            Completed: List module
             <li>Allow design of emails in application (WYSYWIG Editor) </li>
+            Completed: template module & has already replaced a better editor
 
         </ul>
 
@@ -32,11 +39,66 @@
         <ul>
 
             <li>Login with NYC.ID (SAML 2.0 Identity Provider)</li>
+            Not Implemented: Configuration is completed
             <li>Permissions for sending, managing contact list, and editing / creating newsletters</li>
         </ul>
 
+    <h2>Feature Overview</h2>
+        <ul>
+
+            <li>Login (currently):</li>
+
+            Verify by username and password</br>
+            Use registered email address to reset the password
+
+            <li>Dashboard Activity:</li>
+
+            Show the statistics of each campaign (open rates or more)
+
+            <li>Campaigns:</li>
+
+            Create and send new subscribe emails</br>
+            It's possible to send it directly or at a scheduled time</br>
+            When create a new campaign, input the campaign's name</br>
+            Load recipients by choosing existed mailing lists and tags;</br>
+            Input who is sending this email and his email address (this is not the actual email to send newsletter which is already designated in configuration files);</br>
+            Add a subject;</br>
+            Choose email templates, WYSYWIG editor is available</br>
+            Monitor the rate of opening the links (if there is some in the campaign contents)</br>
+
+            <li>Mailing Lists:</li>
+    
+            Create lists by providing list names and other information;</br>
+            Either import subscibers or input them manually</br>
+            Can add speciliazed embedded forms, tags, unsubscribe link and modify other settings in every mailing list
+
+            <li>Templates:</li>
+
+            Create email templates by copy and paste HTML templates
 
 
+            <li>Overview:</li>
+
+            Create and manage multiple mailing lists;</br>
+            Import lists from other providers (csv files or paste email addresses);</br>
+            Create reusable email templates;</br>
+            Customize sign up pages (subscribe, unsubscribe, thank you page, etc.);</br>
+            Default double opt-in for sign ups;</br>
+            Schedule email campaign to send on a specific date and time;</br>
+            Track email opens and clicks;</br>
+            Change link URL after email is sent;</br>
+            Reports with geolocation;</br>
+            Compatible with Mailgun, SendGrid, Mandrill, or any other SMTP email service.
+        </ul>
+
+
+    <h2>SAML Reference</h2>
+        <ul>
+
+            <li>Login (currently):</li>
+
+            
+        </ul>
 
     </body>
 </html>
