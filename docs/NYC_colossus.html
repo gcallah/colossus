@@ -21,7 +21,7 @@
             Completed: Completed. Using MailGun. Configuration information in /colossus.settings.py EMAIL SETTINGS and FIRST_PARTY APP SETTINGS</br>
             Currently sent through Joel's email addr: jocastillo@records.nyc.gov
             <li>Allow upload of HTML template in application </li>
-            Completed: template module
+            Completed: template module with better editor: tinymce
             <li>Store newsletter statistics (delivery success / failures) </li>
             Completed: Dashboard module
             <li>Ability to provide attachments (custom or single attachment)</li>
@@ -31,7 +31,7 @@
             <li>Includes the ability to manage multiple contact lists</li>
             Completed: List module
             <li>Allow design of emails in application (WYSYWIG Editor) </li>
-            Completed: template module & has already replaced a better editor
+            Completed: template module & has already replaced a better editor: tinymce
 
         </ul>
 
@@ -74,7 +74,8 @@
 
             <li>Templates:</li>
 
-            Create email templates by copy and paste HTML templates
+            Create email templates by copy and paste HTML templates</br>
+            Editor: tinymce
 
 
             <li>Overview:</li>
@@ -91,13 +92,42 @@
             Compatible with Mailgun, SendGrid, Mandrill, or any other SMTP email service.
         </ul>
 
-
-    <h2>SAML Reference</h2>
+    <h2>SAML Configurations</h2>
         <ul>
 
             <li>Login (currently):</li>
 
             
+        </ul>
+
+    <h2>SAML Reference</h2>
+        <ul>
+
+            <li>
+                <a href="https://github.com/fangli/django-saml2-auth">https://github.com/fangli/django-saml2-auth</a> <br>
+                An example of saml2 authentication with django.
+            </li>
+
+            <li>
+                <a href="https://github.com/onelogin/python-saml">https://github.com/onelogin/python-saml</a> <br>
+                Another example of saml authentication with django.
+            </li>
+
+             <li>
+                <a href="https://developers.onelogin.com/saml/python">https://developers.onelogin.com/saml/python</a> <br>
+                Offcial set up document of SAML onelogin that NYC uses.
+            </li>
+
+        </ul>
+
+    <h2>Others</h2>
+        <ul>
+
+            <li>Database login module: /colossus/apps/accounts</li>
+            <li>Database signup module: /colossus/apps/core</li>
+
+			<li>Use django's default django.contrib.auth. </br>
+			E.g. auth_views.LoginView.as_view()</li>     
         </ul>
 
     </body>
