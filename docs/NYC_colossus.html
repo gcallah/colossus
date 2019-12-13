@@ -95,7 +95,14 @@
     <h2>SAML Configurations</h2>
         <ul>
 
-            <li>Login (currently):</li>
+            <li>Library Import</li>
+            /requirements/production.txt
+            <li>Basic Settings</li>
+            /instance/saml/settings.json.example
+            <li>Advanced Settings</li>
+            /instance/saml/advanced_settings.json.example
+            <li>SAML Settings in Project</li>
+            /colossus/settings.py
 
             
         </ul>
@@ -113,10 +120,14 @@
                 Another example of saml authentication with django.
             </li>
 
-             <li>
+            <li>
                 <a href="https://developers.onelogin.com/saml/python">https://developers.onelogin.com/saml/python</a> <br>
                 Offcial set up document of SAML onelogin that NYC uses.
             </li>
+
+            <li>People to Contact: Joel Castillo (jocastillo@records.nyc.gov)
+            </li>
+
 
         </ul>
 
@@ -128,6 +139,16 @@
 
 			<li>Use django's default django.contrib.auth. </br>
 			E.g. auth_views.LoginView.as_view()</li>     
+        </ul>
+
+    <h2>What to do</h2>
+        <ul>
+
+            <li>Eliminate django.contrib.auth in apps/accounts/urls.py</li>
+            <li>Replace db models with saml_auth in accounts/models.py</li>
+            <li>Replace account model in accounts/views.py</li>
+            <li>Eliminate current forms in apps/accounts/forms.py</li>
+			<li>Eliminate django.contrib.auth in apps/core/urls.py</li>     
         </ul>
 
     </body>
