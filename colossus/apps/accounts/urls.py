@@ -1,5 +1,4 @@
 from colossus.apps.core import views as core_views
-
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
