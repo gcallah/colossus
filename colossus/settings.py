@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'colossus.apps.lists',
     'colossus.apps.notifications',
     'colossus.apps.subscribers',
-
-    'django_saml2_auth',
+    # 'django_saml2_auth',
 ]
 
 SITE_ID = 1
