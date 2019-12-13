@@ -281,9 +281,9 @@ SAML2_AUTH = {
         'SUPERUSER_STATUS': False,
         # The superuser status for new users
     },
-    'ATTRIBUTES_MAP': {
     # Change Email/UserName/FirstName/LastName to
     # corresponding SAML2 userprofile attributes.
+    'ATTRIBUTES_MAP': {
         'UID': 'GUID',
         'email': 'mail',
         'firstName': 'givenName',
@@ -305,6 +305,6 @@ SAML2_AUTH = {
     # Set this to True if you are running a Single Page Application (SPA)
     # with Django Rest Framework (DRF), and are using
     # JWT authentication to authorize client users
-    'FRONTEND_URL': 'https://myfrontendclient.com', 
+    'FRONTEND_URL': 'https://myfrontendclient.com',
     # Redirect URL for the client if you are using JWT auth with DRF.
 }
