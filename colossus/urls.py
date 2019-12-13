@@ -5,11 +5,9 @@ from colossus.apps.core import views as core_views
 
 
 urlpatterns = [
-
-    path('saml2_auth/', include('django_saml2_auth.urls')),
-    path('accounts/login/', django_saml2_auth.views.signin),
-    path('admin/login/', django_saml2_auth.views.signin),
-
+    # path('saml2_auth/', include('django_saml2_auth.urls')),
+    # path('accounts/login/', django_saml2_auth.views.signin),
+    # path('admin/login/', django_saml2_auth.views.signin),
     path('', core_views.dashboard, name='dashboard'),
     path('', include('colossus.apps.subscribers.urls', namespace='subscribers')),
     path('setup/', core_views.setup, name='setup'),
