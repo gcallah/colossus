@@ -24,8 +24,10 @@ from .constants import CampaignStatus, CampaignTypes
 from .tasks import send_campaign_task, update_rates_after_campaign_deletion
 
 '''
-Defines the schema for a Campaign object and consists of functionalities related to the campaign. 
+Defines the schema for a Campaign object and consists of functionalities related to the campaign.
 '''
+
+
 class Campaign(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(_('name'), max_length=100)
@@ -120,7 +122,6 @@ class Campaign(models.Model):
             except Email.MultipleObjectsReturned:
                 self.__cached_email = self.emails.order_by('id').first()
         return self.__cached_email
-
 
     def get_recipients(self):
         queryset = self.mailing_list.get_active_subscribers()
