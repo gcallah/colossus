@@ -30,6 +30,10 @@ from .forms import (
 from .mixins import CampaignMixin
 from .models import Campaign, Email, Link
 
+'''
+Provide a view to list the available campaigns
+'''
+
 
 @method_decorator(login_required, name='dispatch')
 class CampaignListView(CampaignMixin, ListView):
@@ -65,6 +69,11 @@ class CampaignListView(CampaignMixin, ListView):
         queryset = queryset.order_by('-update_date')
 
         return queryset
+
+
+'''
+Provides a view to create campaigns
+'''
 
 
 @method_decorator(login_required, name='dispatch')

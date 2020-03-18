@@ -78,6 +78,9 @@ class Campaign(models.Model):
         verbose_name_plural = _('campaigns')
         db_table = 'colossus_campaigns'
 
+    '''
+    Return campaign name
+    '''
     def __str__(self):
         return self.name
 
@@ -88,6 +91,9 @@ class Campaign(models.Model):
             return reverse('campaigns:campaign_scheduled', kwargs={'pk': self.pk})
         return reverse('campaigns:campaign_detail', kwargs={'pk': self.pk})
 
+    '''
+    Delete a campaign
+    '''
     def delete(self, using=None, keep_parents=False):
         super().delete(using, keep_parents)
         update_rates_after_campaign_deletion.delay(self.mailing_list_id)
@@ -213,6 +219,11 @@ class Campaign(models.Model):
         """
         links = Link.objects.filter(email__campaign=self).order_by('-total_clicks_count')
         return links
+
+
+'''
+Defines the schema for an Email object with functionalities for it
+'''
 
 
 class Email(models.Model):
