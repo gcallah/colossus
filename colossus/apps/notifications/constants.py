@@ -2,6 +2,9 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Actions:
+    """
+    A class to list all the constants used trhought the app.
+    """
     IMPORT_COMPLETED = 1
     IMPORT_ERRORED = 2
     CAMPAIGN_SENT = 3

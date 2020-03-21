@@ -17,6 +17,9 @@ User = get_user_model()
 
 
 class Notification(models.Model):
+    """
+    A class to render the notifications.
+    """
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('user'), related_name='notifications')
     content_type = models.ForeignKey(
         ContentType,
@@ -41,9 +44,15 @@ class Notification(models.Model):
         db_table = 'colossus_notifications'
 
     def __str__(self):
+        """
+        Overwrite the inbuilt __str__ function.
+        """
         return self.text
 
     def get_absolute_url(self):
+        """
+        A function to get the url of the notification.
+        """
         return reverse('notifications:notification_detail', kwargs={'pk': self.pk})
 
     @property
@@ -53,6 +62,9 @@ class Notification(models.Model):
         return self.__data
 
     def render(self):
+        """
+        A function to render the notifications using constants defined in constants.py.
+        """
         renderers = {
             Actions.IMPORT_COMPLETED: render_import_completed,
             Actions.IMPORT_ERRORED: render_import_errored,
