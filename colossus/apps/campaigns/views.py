@@ -30,13 +30,12 @@ from .forms import (
 from .mixins import CampaignMixin
 from .models import Campaign, Email, Link
 
-'''
-Provide a view to list the available campaigns
-'''
-
 
 @method_decorator(login_required, name='dispatch')
 class CampaignListView(CampaignMixin, ListView):
+    """
+    Provide a view to list the available campaigns
+    """
     model = Campaign
     context_object_name = 'campaigns'
     paginate_by = 25
@@ -71,13 +70,11 @@ class CampaignListView(CampaignMixin, ListView):
         return queryset
 
 
-'''
-Provides a view to create campaigns
-'''
-
-
 @method_decorator(login_required, name='dispatch')
 class CampaignCreateView(CampaignMixin, CreateView):
+    """
+    Provides a view to create campaigns
+    """
     model = Campaign
     form_class = CreateCampaignForm
 

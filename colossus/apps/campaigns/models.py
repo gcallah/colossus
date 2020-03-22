@@ -23,12 +23,11 @@ from colossus.apps.templates.utils import get_template_blocks
 from .constants import CampaignStatus, CampaignTypes
 from .tasks import send_campaign_task, update_rates_after_campaign_deletion
 
-'''
-Defines the schema for a Campaign object and consists of functionalities related to the campaign.
-'''
-
 
 class Campaign(models.Model):
+    """
+    Defines the schema for a Campaign and related functionalities
+    """
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(_('name'), max_length=100)
     campaign_type = models.PositiveSmallIntegerField(
@@ -78,10 +77,10 @@ class Campaign(models.Model):
         verbose_name_plural = _('campaigns')
         db_table = 'colossus_campaigns'
 
-    '''
-    Return campaign name
-    '''
     def __str__(self):
+        """
+        Returns the campaign name
+        """
         return self.name
 
     def get_absolute_url(self) -> str:
@@ -91,25 +90,25 @@ class Campaign(models.Model):
             return reverse('campaigns:campaign_scheduled', kwargs={'pk': self.pk})
         return reverse('campaigns:campaign_detail', kwargs={'pk': self.pk})
 
-    '''
-    Delete a campaign
-    '''
     def delete(self, using=None, keep_parents=False):
+        """
+        Delete a campaign
+        """
         super().delete(using, keep_parents)
         update_rates_after_campaign_deletion.delay(self.mailing_list_id)
 
-    '''
-    Check if the campaign is scheduled
-    '''
     @property
     def is_scheduled(self) -> bool:
+        """
+        Check if the campaign is scheduled
+        """
         return self.status == CampaignStatus.SCHEDULED
 
-    '''
-    Check if the campaign is in Draft stage
-    '''
     @property
     def can_edit(self) -> bool:
+        """
+        Check if the campaign is in Draft stage
+        """
         return self.status == CampaignStatus.DRAFT
 
     @property
@@ -221,12 +220,10 @@ class Campaign(models.Model):
         return links
 
 
-'''
-Defines the schema for an Email object with functionalities for it
-'''
-
-
 class Email(models.Model):
+    """
+    Defines the schema for an Email object with related functionalities for it
+    """
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE, verbose_name=_('campaign'), related_name='emails')
     template = models.ForeignKey(
