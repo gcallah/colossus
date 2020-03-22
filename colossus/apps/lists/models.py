@@ -16,6 +16,9 @@ User = get_user_model()
 
 
 class MailingList(models.Model):
+    """
+    Defines the schema for a Mailing list and functions to manipulate it's properties
+    """
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(_('name'), max_length=100)
     slug = models.SlugField(_('list short URL'), max_length=100, unique=True)
@@ -66,20 +69,32 @@ class MailingList(models.Model):
         db_table = 'colossus_mailing_lists'
 
     def __str__(self):
+        """
+        Get the name of Mailing List
+        """
         return self.name
 
     def get_absolute_url(self):
         return reverse('mailing:subscribers', kwargs={'pk': self.pk})
 
     def get_active_subscribers(self):
+        """
+        Get a list of active subscribers
+        """
         return self.subscribers.filter(status=Status.SUBSCRIBED)
 
     def update_subscribers_count(self) -> int:
+        """
+        Update the count of active subscribers
+        """
         self.subscribers_count = self.get_active_subscribers().count()
         self.save(update_fields=['subscribers_count'])
         return self.subscribers_count
 
     def update_click_rate(self) -> float:
+        """
+        Update the click rate for a mailing list
+        """
         qs = self.get_active_subscribers() \
             .exclude(last_sent=None) \
             .aggregate(Avg('click_rate'))
@@ -88,6 +103,9 @@ class MailingList(models.Model):
         return self.click_rate
 
     def update_open_rate(self) -> float:
+        """
+        Update the email open rate for a mailing list
+        """
         qs = self.get_active_subscribers() \
             .exclude(last_sent=None) \
             .aggregate(Avg('open_rate'))
