@@ -7,6 +7,12 @@ from colossus.apps.lists.models import MailingList
 
 
 def render_import_completed(notification):
+    """
+    A function to render a message if importing subscribers is completed successfully.
+
+    Functional arguments:
+    notification -- An object of Notification model class.
+    """
     data = notification.data
     mailing_list = MailingList.objects.values('id', 'name').get(pk=data['mailing_list_id'])
     data['mailing_list_name'] = escape(mailing_list['name'])
@@ -16,6 +22,12 @@ def render_import_completed(notification):
 
 
 def render_import_errored(notification):
+    """
+    A function to render a message if there is an error in importing subscribers.
+
+    Functional arguments:
+    notification -- An object of Notification model class.
+    """
     data = notification.data
     mailing_list = MailingList.objects.values('id', 'name').get(pk=data['mailing_list_id'])
     data['mailing_list_name'] = escape(mailing_list['name'])
@@ -25,6 +37,12 @@ def render_import_errored(notification):
 
 
 def render_campaign_sent(notification):
+    """
+    A function to render the mailing list name of a campaign, if sent successfully.
+
+    Functional arguments:
+    notification -- An object of Notification model class.
+    """
     data = notification.data
     campaign = Campaign.objects.select_related('mailing_list').get(pk=data['campaign_id'])
     data['campaign_name'] = escape(campaign.name)
@@ -36,6 +54,12 @@ def render_campaign_sent(notification):
 
 
 def render_list_cleaned(notification):
+    """
+    A function to render a message if the mailing list is cleaned.
+
+    Functional arguments:
+    notification -- An object of Notification model class.
+    """
     data = notification.data
     mailing_list = MailingList.objects.values('id', 'name').get(pk=data['mailing_list_id'])
     data['mailing_list_name'] = escape(mailing_list['name'])
