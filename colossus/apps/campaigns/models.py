@@ -73,6 +73,9 @@ class Campaign(models.Model):
     __cached_email = None
 
     class Meta:
+        """
+        Provides metadata for Campaign object creation
+        """
         verbose_name = _('campaign')
         verbose_name_plural = _('campaigns')
         db_table = 'colossus_campaigns'
@@ -84,6 +87,9 @@ class Campaign(models.Model):
         return self.name
 
     def get_absolute_url(self) -> str:
+        """
+        Returns the URL for a campaign based on the current status of a campaign
+        """
         if self.can_edit:
             return reverse('campaigns:campaign_edit', kwargs={'pk': self.pk})
         elif self.is_scheduled:
@@ -113,6 +119,9 @@ class Campaign(models.Model):
 
     @property
     def can_send(self) -> bool:
+        """
+        Check if all the emails in a campaign can be sent
+        """
         for email in self.emails.all():
             if not email.can_send:
                 return False
@@ -254,11 +263,17 @@ class Email(models.Model):
     BASE_TEMPLATE_VAR = 'base_template'
 
     class Meta:
+        """
+        Provides metadata for Email object creation
+        """
         verbose_name = _('email')
         verbose_name_plural = _('emails')
         db_table = 'colossus_emails'
 
     def __str__(self):
+        """
+        Returns the subject of email
+        """
         return self.subject
 
     @property
