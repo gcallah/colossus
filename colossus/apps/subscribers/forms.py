@@ -17,7 +17,7 @@ class SubscribeForm(forms.ModelForm):
     A class to add a subscriber to mailing lists.
     """
     class Meta:
-        model = Subscribermail
+        model = Subscriber
         fields = ('email',)
 
     def __init__(self, *args, **kwargs):
