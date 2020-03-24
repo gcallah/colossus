@@ -13,15 +13,27 @@ from .models import Domain, Subscriber
 
 
 class SubscribeForm(forms.ModelForm):
+    """
+    A class to add a subscriber to mailing lists.
+    """
     class Meta:
         model = Subscriber
         fields = ('email',)
 
     def __init__(self, *args, **kwargs):
+        """
+        This initialization function is used to initalize the mailing list.
+        """
         self.mailing_list = kwargs.pop('mailing_list')
         super().__init__(*args, **kwargs)
 
     def clean(self):
+        """
+        A fucntion to check if the subscriber is already present in the mailing list.
+        Fist, we clean the subscriber form data by validating it.
+        Then, we check if the subscriber is already present in the mailing list.
+        We generate an error message if the subscriber is already present.
+        """
         cleaned_data = super().clean()
         email = cleaned_data.get('email')
         is_subscribed = Subscriber.objects \
@@ -37,11 +49,19 @@ class SubscribeForm(forms.ModelForm):
         return cleaned_data
 
     def clean_email(self):
+        """
+        This function validates the subscriber email.
+        """
         email = self.cleaned_data.get('email')
         return Subscriber.objects.normalize_email(email)
 
     @transaction.atomic
     def subscribe(self, request):
+        """
+        This function adds a subscriber to the mailing list.
+        First, we extract the domain name from the email address.
+        Then, we ask for the confirmation from the user by sending them a confirmation link.
+        """
         email = self.cleaned_data.get('email')
 
         email_name, domain_part = email.rsplit('@', 1)
@@ -78,16 +98,28 @@ class SubscribeForm(forms.ModelForm):
 
 
 class UnsubscribeForm(forms.Form):
+    """
+    A class to remove a subscriber from the mailing list.
+    """
     email = forms.EmailField()
 
     class Meta:
         fields = ('email',)
 
     def __init__(self, *args, **kwargs):
+        """
+        This initialization function is used to initalize the mailing list.
+        """
         self.mailing_list = kwargs.pop('mailing_list')
         super().__init__(*args, **kwargs)
 
     def clean(self):
+        """
+        A fucntion to check if the subscriber is already present in the mailing list.
+        Fist, we clean the email address from the form by validating it.
+        Then, we check if the subscriber is present in the mailing list.
+        We generate an error message if the subscriber is not present in the mailing list.
+        """
         cleaned_data = super().clean()
         email = cleaned_data.get('email')
         is_subscribed = Subscriber.objects.filter(
@@ -105,6 +137,9 @@ class UnsubscribeForm(forms.Form):
         return cleaned_data
 
     def unsubscribe(self, request):
+        """
+        This function removes the email address from the mailing list.
+        """
         email = self.cleaned_data.get('email')
         subscriber = Subscriber.objects.get(email=email, mailing_list=self.mailing_list)
         subscriber.unsubscribe(request)
