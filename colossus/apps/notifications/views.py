@@ -13,6 +13,9 @@ from colossus.apps.notifications.models import Notification
 
 @method_decorator(login_required, name='dispatch')
 class NotificationListView(ListView):
+    """
+    A class to display all the notifications in list view.
+    """
     model = Notification
     context_object_name = 'notifications'
     paginate_by = 100
@@ -29,6 +32,9 @@ class NotificationListView(ListView):
 
 @method_decorator(login_required, name='dispatch')
 class NotificationDetailView(DetailView):
+    """
+    A class to display the notification in detailed view.
+    """
     model = Notification
     context_object_name = 'notification'
 
@@ -45,6 +51,9 @@ class NotificationDetailView(DetailView):
 
 @login_required
 def unread(request):
+    """
+    A function to mark the notification as seen after the user has seen it.
+    """
     notifications = Notification.objects.filter(user=request.user).order_by('-date')
     notifications.update(is_seen=True)
     context = {
@@ -59,6 +68,9 @@ def unread(request):
 @require_POST
 @csrf_exempt
 def mark_all_as_read(request):
+    """
+    A function to mark the notification as read after the user reads it.
+    """
     request.user.notifications.update(is_read=True, is_seen=True)
 
     # If the request is ajax, it means it came from the small notifications widget on the top menu
@@ -72,6 +84,9 @@ def mark_all_as_read(request):
 @require_POST
 @csrf_exempt
 def clear_all(request):
+    """
+    A function to delete all the notifications.
+    """
     request.user.notifications.all().delete()
 
     # If the request is ajax, it means it came from the small notifications widget on the top menu
