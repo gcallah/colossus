@@ -2,18 +2,18 @@
     "strict": true,
     "debug": true,
     "sp": {
-        "entityId": "https://colossus.appdev.records.nycnet/auth/metadata",
+        "entityId": "https://colossus.pythonanywhere.com/auth/metadata",
         "assertionConsumerService": {
-            "url": "https://colossus.appdev.records.nycnet/auth/saml?acs",
+            "url": "https://colossus.pythonanywhere.com/auth/saml?acs",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         },
         "singleLogoutService": {
-            "url": "https://colossus.appdev.records.nycnet/auth/saml?sls",
+            "url": "https://colossus.pythonanywhere.com/auth/saml?sls",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
         },
         "NameIDFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:transient",
-        "x509cert": "MIIEAjCCAuoCCQDZpRd6py8WqTANBgkqhkiG9w0BAQsFADCBwjELMAkGA1UEBhMCVVMxETAPBgNVBAgMCE5ldyBZb3JrMREwDwYDVQQHDAhOZXcgWW9yazEZMBcGA1UECgwQQ2l0eSBvZiBOZXcgWW9yazEeMBwGA1UECwwVRGVwYXJ0bWVudCBvZiBSZWNvcmRzMScwJQYDVQQDDB5jb2xvc3N1cy5hcHBkZXYucmVjb3Jkcy5ueWNuZXQxKTAnBgkqhkiG9w0BCQEWGmpvY2FzdGlsbG9AcmVjb3Jkcy5ueWMuZ292MB4XDTE5MTEyOTE4NDUxMloXDTI5MTEyODE4NDUxMlowgcIxCzAJBgNVBAYTAlVTMREwDwYDVQQIDAhOZXcgWW9yazERMA8GA1UEBwwITmV3IFlvcmsxGTAXBgNVBAoMEENpdHkgb2YgTmV3IFlvcmsxHjAcBgNVBAsMFURlcGFydG1lbnQgb2YgUmVjb3JkczEnMCUGA1UEAwweY29sb3NzdXMuYXBwZGV2LnJlY29yZHMubnljbmV0MSkwJwYJKoZIhvcNAQkBFhpqb2Nhc3RpbGxvQHJlY29yZHMubnljLmdvdjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMEXCPUC749t+NsP1a0ZuO2RuO785mlVKLKpwoHRwReMQmyLHkmE5DHQkIOECWN1kbDi2e7iH/KIy7vG4BW6Mj2TLU3ie4WrUoQgT0LbgFdPXQYKrMm2EvBrZ9tC6Iw22ZX/fVzO7hnwpwNjF/A+1+fa73OOIZoorgOBPHQKXMmXiISdP99ZbubHFOP7//3kYjJ8uVwtnq6mMNEB+n7KIcGp2tlB3Gp73LUnkRMAZ6sTrCCPfKZuNN0Y9x+CR6IPQgAJBeCprHMFtxdaUK9vL7uUUFICadhFjzwHU+B4L8naSVTXs/JEXEpyIGAdoi2EA/0N1SMBYT7bodvSr5tCiN0CAwEAATANBgkqhkiG9w0BAQsFAAOCAQEAAuVXYP22WRugjwZg6WF8SdQ/kCy5lEx3zwIf+BB0lPDfMiYN8yf1B3/TCRyMSJ1RtKob9SjzM4rF31wGVr4i9BSh9qsWcvU1m+EGMOI3ywUa6gjnFszM5xAJhYwBzaXn8xi7LoV8gB5Q4uVSjhrpZVlZ0VlYSZyeEpGJANB0okm/rI3kAHmx4vZ8E37otdtKlbdRPD3AqTK53dpFgazpsFWnZLd1TinE9UIy6ihyG+eZ6ucAdh0K6zRsi1pHbKaD/9XgTHGOGT6oX65wSetO8logO1NvTWkLysAhJNUfLDNfd2LoYgMKs2RQkE7ZZV17UClDPlJOZS1pCeinrRTxvw=",
-        "privateKey": "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDBFwj1Au+PbfjbD9WtGbjtkbju/OZpVSiyqcKB0cEXjEJsix5JhOQx0JCDhAljdZGw4tnu4h/yiMu7xuAVujI9ky1N4nuFq1KEIE9C24BXT10GCqzJthLwa2fbQuiMNtmV/31czu4Z8KcDYxfwPtfn2u9zjiGaKK4DgTx0ClzJl4iEnT/fWW7mxxTj+//95GIyfLlcLZ6upjDRAfp+yiHBqdrZQdxqe9y1J5ETAGerE6wgj3ymbjTdGPcfgkeiD0IACQXgqaxzBbcXWlCvby+7lFBSAmnYRY88B1PgeC/J2klU17PyRFxKciBgHaIthAP9DdUjAWE+26Hb0q+bQojdAgMBAAECggEAVwJmSuITyXIo3a34/5PDvWoZB7h2q6hwOnI87/rxJAdUN01JTJ/RpJDzThBFmsfz6t2OjxLeipASHn+zopbQ5OZZV+ti9g0JlfhpPxtibfWZWYud6Rde2W/M0QUJfYWJ7wm+GAA3UwEagXA57UykRhpmJJA7nBgQsguejjvNLBmPzOfbCEAP8ErWD7+a4elr/pk3RY54iJd4dR7cH5OkQ5zIEqoK0ABR1qUuLZoVC2gvPW6u9odkisegUIMvlQxRK/GzjBWuPXg43OAvL3iXlTHerGw8OmDcPrpdYSbwaAvel1gMVE47SdiwbRL9Fwj8a67ttaTAyxUK8d/ChVJPEQKBgQDuv/Q4EkM9wBtt/5hM8QLJd7USdvq4M+ednIAuDln3CrObJujdBXd0lMVGVCqB6VPO8K5JjSwGzgMcbGjJYvu8wd+zakFLxMxeBFqcpFLcOABB8V9LtNwsR8PvunOwKc1lKKZEZ/DFv19CaujyLQUe8fQrMHCvY33KGsvkak1PBwKBgQDPCogo6gNK+vT3sgcqa62RlidEblrlcobPSluTqAXkQ1lQ3X+uaZoLfGIciQTSz9EKHGBG/b3NOsYB4Vv/Xwv6F8CKewseUkf+tB76m8YHvDk19KLnbzM8vyeDHeaqSIe4JKVaxHP6MkXsKLO/+B8GbcnviKYRUQj6MecHV3lL+wKBgQCXLDIeIuoyumZj4xhzd5PVL5gWxgGBC1SYBtVe1DWA6GTLU/rUoDaAOgcjvf1gXvZzLRCef+YltOJhZ/99rNBLN9NGjnwj1su0qDsbviy9RjRbjNNTY4SaASL+s2e3XvCwIeoNnGbnP4K40msHlRwN+RQrGLPxSiUHCKqbyfeDlwKBgByhoTi/O9tXnx7N4M3N/D/A2wdMl4dZcikiaE2gE8iAQ866Atk0w1fJSKwXirI4iPjz+aB3oJLMCOvjpVxIYZihRkAgSeZUjJ49fHc9qYISVnsOrKSCrTw+VxF7xhVQWGxvrOpDdqJn52GEM29dubSi5CUa6ZRFd49Z7VAHmb+XAoGAeD3aCqZhnNnea+KVWs3gW69m7W3UlN576YhItAXy47K5wPh/1mPvnCpWJRT6N/2VD7vDmAxgHBsqWLWzbgUf9KoVyjL8CIp79YIzTqeC+CbSbSPIKDadCf377VFCyU0p6YyRo8euIUgzExRjmc51G4/7sS751WBjqDQP8UmrYUY="
+        "x509cert": "",
+        "privateKey": ""
     },
     "idp": {
         "entityId": "https://fidm.us1.gigya.com/saml/v2.0/3_DkZigi2v_eW7z-cZt8PAw-cYWQYg2d8VqABUFRZUhhzxNAdwR5brLl_h8Hqbo7Bm/idp/metadata",
@@ -25,6 +25,6 @@
             "url": "https://fidm.us1.gigya.com/saml/v2.0/3_DkZigi2v_eW7z-cZt8PAw-cYWQYg2d8VqABUFRZUhhzxNAdwR5brLl_h8Hqbo7Bm/idp/slo",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
         },
-        "x509cert": "MIICujCCAaKgAwIBAgIQfvBsmKVV64lL9IeOyu8OsjANBgkqhkiG9w0BAQUFADAYMRYwFAYDVQQDEw1HaWd5YSBTQU1MIFNQMCAXDTE4MDczMTEyMjIyNloYDzIxMTgwNzMxMTIyMjI2WjAYMRYwFAYDVQQDEw1HaWd5YSBTQU1MIFNQMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0al9NIjBymrRIihclm34"
+        "x509cert": ""
     }
 }
