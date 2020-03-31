@@ -10,7 +10,8 @@ python:
 
 before_install:
   - sudo apt-get install libxml2
-  - sudo apt-get install libxmlsec1
+  - sudo apt-get install libxmlsec1-dev
+  - sudo apt-get install pkg-config
 
 install:
   - pip install tox-travis codecov
