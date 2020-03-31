@@ -4,11 +4,13 @@ addons:
   apt:
     packages:
       - libenchant-dev
-      - libxml2
-      - libxmlsec1
 
 python:
   - "3.6"
+
+before_install:
+  - sudo apt-get install libxml2
+  - sudo apt-get install libxmlsec1
 
 install:
   - pip install tox-travis codecov
