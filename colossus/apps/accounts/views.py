@@ -76,7 +76,21 @@ def login(request):
         return HttpResponseRedirect(auth.login())
 
     elif "slo" in req["get_data"]:
-        pass
+        name_id = session_index = name_id_format = name_id_nq = name_id_spnq = None
+        if 'samlNameId' in request.session:
+            name_id = request.session['samlNameId']
+        if 'samlSessionIndex' in request.session:
+            session_index = request.session['samlSessionIndex']
+        if 'samlNameIdFormat' in request.session:
+            name_id_format = request.session['samlNameIdFormat']
+        if 'samlNameIdNameQualifier' in request.session:
+            name_id_nq = request.session['samlNameIdNameQualifier']
+        if 'samlNameIdSPNameQualifier' in request.session:
+            name_id_spnq = request.session['samlNameIdSPNameQualifier']
+
+        return HttpResponseRedirect(
+            auth.logout(name_id=name_id, session_index=session_index, nq=name_id_nq, name_id_format=name_id_format,
+                        spnq=name_id_spnq))
 
     elif "acs" in req["get_data"]:
         pass
