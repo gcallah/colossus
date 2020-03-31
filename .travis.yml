@@ -8,6 +8,9 @@ addons:
 python:
   - "3.6"
 
+before_install:
+  - apt-get install xmlsec
+
 install:
   - pip install tox-travis codecov
 
