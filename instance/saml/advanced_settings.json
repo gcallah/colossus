@@ -27,7 +27,7 @@
     "en-US": {
       "name": "sp_test",
       "displayname": "SP test",
-      "url": "https://colossus.appdev.records.nycnet"
+      "url": "https://colossus.pythonanywhere.com"
     }
   }
 }
