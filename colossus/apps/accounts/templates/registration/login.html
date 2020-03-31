@@ -11,15 +11,18 @@
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ next }}">
           {{ form|crispy }}
-          <a href="{% url "login" %}?sso" class="btn btn-primary">Login</a> 
+          <button type="submit" class="btn btn-primary btn-block">{% trans 'Log in' %}</button>
         </form>
       </div>
     </div>
-    <!-- <div class="text-center">
+    <div class="text-center">
       <a href="{% url 'password_reset' %}" class="btn btn-link">{% trans 'Forgot your password?' %}</a>
     </div>
     <div class="text-center">
       <a href="{% url 'setup' %}" class="btn btn-link">{% trans 'Create an account' %}</a>
-    </div> -->
+    </div>
+    <div class="text-center">
+      <a href="{% url 'sso_login' %}?sso" class="btn btn-link">{% trans 'Login with NYC ID' %}</a>
+    </div>
   </div>
 {% endblock %}

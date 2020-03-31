@@ -60,7 +60,7 @@ def initialize_saml(request):
     return auth
 
 
-def login(request):
+def ssoLogin(request):
     """
     A function to actually authenticate the user using SAML.
     """
