@@ -30,11 +30,21 @@ def prepare_django_request(request):
     A function to get information about the host.
     """
 
+    http_host = None
+    script_name = None
+    server_port = None
+
+    if 'HTTP_HOST' in request.META:
+        http_host = request.META["HTTP_HOST"]
+    if 'PATH_INFO' in request.META:
+        script_name = request.META["PATH_INFO"]
+    if 'SERVER_PORT' in request.META:
+        server_port = request.META["SERVER_PORT"]
     result = {
         "https": "on" if request.is_secure() else "off",
-        "http_host": request.META["HTTP_HOST"],
-        "script_name": request.META["PATH_INFO"],
-        "server_port": request.META["SERVER_PORT"],
+        "http_host": http_host,
+        "script_name": script_name,
+        "server_port": server_port,
         "get_data": request.GET.copy(),
         "post_data": request.POST.copy()
     }
