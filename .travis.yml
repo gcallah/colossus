@@ -12,6 +12,7 @@ before_install:
   - sudo apt-get install libxml2
   - sudo apt-get install libxmlsec1-dev
   - sudo apt-get install pkg-config
+  - sudo apt-get install sshpass
 
 install:
   - pip install tox-travis codecov
@@ -21,6 +22,7 @@ script:
 
 after_success:
   - codecov
+  - ./deploy.sh $pa_pwd $pa_api_token
 
 env:
   - TOXENV=py3
