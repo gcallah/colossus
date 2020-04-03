@@ -72,6 +72,8 @@ def ssoLogin(request):
     error_reason = None
     success_slo = False
     attributes = False
+    paint_logout = False
+    not_auth_warn = False
 
     if "sso" in req["get_data"]:
         return HttpResponseRedirect(auth.login())
@@ -117,10 +119,28 @@ def ssoLogin(request):
             error_reason = auth.get_last_error_reason()
 
     elif "sls" in req["get_data"]:
-        pass
+        request_id = None
+        if "LogoutRequestID" in request.session:
+            request_id = request.session["LogoutRequestID"]
+        dscb = request.session.flush()
+        url = auth.process_slo(request_id=request_id, delete_session_cb=dscb)
+        errors = auth.get_errors()
+        if len(errors) == 0:
+            if url is not None:
+                return HttpResponseRedirect(url)
+            else:
+                success_slo = True
+        elif auth.get_settings().is_debug_active():
+            error_reason = auth.get_last_error_reason()
 
-    return render(request, "registration/login.html", {"errors": errors, "error_reason": error_reason,
-                  "success_slo": success_slo, "attributes": attributes})
+    if "samlUserdata" in request.session:
+        paint_logout = True
+        if len(request.session["samlUserdata"]) > 0:
+            attributes = request.session["samlUserdata"].items()
+
+    return render(request, "registration/login.html",
+                  {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
+                   "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
 
 def metadata(request):
