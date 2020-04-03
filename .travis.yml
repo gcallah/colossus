@@ -16,6 +16,7 @@ before_install:
 
 install:
   - pip install tox-travis codecov
+  - pip install python3-saml
 
 script:
   - tox
