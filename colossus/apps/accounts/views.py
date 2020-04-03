@@ -93,7 +93,27 @@ def ssoLogin(request):
                         spnq=name_id_spnq))
 
     elif "acs" in req["get_data"]:
-        pass
+        request_id = None
+        if 'AuthNRequestID' in request.session:
+            request_id = request.session['AuthNRequestID']
+
+        auth.process_response(request_id=request_id)
+        errors = auth.get_errors()
+
+        if not errors:
+            if 'AuthNRequestID' in request.session:
+                del request.session['AuthNRequestID']
+            request.session['samlUserdata'] = auth.get_attributes()
+            request.session['samlNameId'] = auth.get_nameid()
+            request.session['samlNameIdFormat'] = auth.get_nameid_format()
+            request.session['samlNameIdNameQualifier'] = auth.get_nameid_nq()
+            request.session['samlNameIdSPNameQualifier'] = auth.get_nameid_spnq()
+            request.session['samlSessionIndex'] = auth.get_session_index()
+            if 'RelayState' in req['post_data'] and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data'][
+                'RelayState']:
+                return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
+        elif auth.get_settings().is_debug_active():
+            error_reason = auth.get_last_error_reason()
 
     elif "sls" in req["get_data"]:
         pass
