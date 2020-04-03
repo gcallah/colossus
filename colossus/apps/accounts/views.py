@@ -109,9 +109,9 @@ def ssoLogin(request):
             request.session['samlNameIdNameQualifier'] = auth.get_nameid_nq()
             request.session['samlNameIdSPNameQualifier'] = auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = auth.get_session_index()
-            if 'RelayState' in req['post_data'] and OneLogin_Saml2_Utils.get_self_url(req) != req['post_data'][
-                'RelayState']:
-                return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
+            if 'RelayState' in req['post_data']:
+                if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
+                    return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
         elif auth.get_settings().is_debug_active():
             error_reason = auth.get_last_error_reason()
 
