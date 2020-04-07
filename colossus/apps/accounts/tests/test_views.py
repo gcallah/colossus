@@ -33,7 +33,7 @@ class ProfileViewTests(AuthenticatedTestCase):
         self.assertEqual(self.response.status_code, 200)
 
     def test_url_resolves_correct_view(self):
-        view = resolve('/accounts/profile/')
+        view = resolve('/auth/profile/')
         self.assertEqual(view.func.view_class, views.ProfileView)
 
     def test_csrf(self):

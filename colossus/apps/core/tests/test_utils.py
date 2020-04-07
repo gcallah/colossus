@@ -29,5 +29,5 @@ class TestGetAbsoluteURL(TestCase):
     def test_get_aboluste_url_site_domain(self):
         Site.objects.update(domain='mysite.com')
         Site.objects.clear_cache()
-        url = get_absolute_url('login')
-        self.assertEqual(url, 'http://mysite.com/accounts/login/')
+        url = get_absolute_url('sso_login')
+        self.assertEqual(url, 'http://mysite.com/auth/saml')
