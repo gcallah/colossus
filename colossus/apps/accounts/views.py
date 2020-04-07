@@ -3,11 +3,12 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm
 from .models import User
-from django.http import HttpResponseRedirect
+from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.conf import settings
 from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
+from onelogin.saml2.settings import OneLogin_Saml2_Settings
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
@@ -147,4 +148,13 @@ def metadata(request):
     """
     A function to return the metadata of the Service Provider.
     """
-    pass
+    saml_settings = OneLogin_Saml2_Settings(settings=None, custom_base_path=settings.SAML_FOLDER,
+                                            sp_validation_only=True)
+    metadata = saml_settings.get_sp_metadata()
+    errors = saml_settings.validate_metadata(metadata)
+
+    if len(errors) == 0:
+        resp = HttpResponse(content=metadata, content_type="text/xml")
+    else:
+        resp = HttpResponseServerError(content=", ".join(errors))
+    return resp
