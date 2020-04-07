@@ -158,3 +158,19 @@ def metadata(request):
     else:
         resp = HttpResponseServerError(content=", ".join(errors))
     return resp
+
+
+def attributes(request):
+    """
+    A function to return the user's session attributes
+    """
+    paint_logout = False
+    attributes = False
+
+    if 'samlUserdata' in request.session:
+        paint_logout = True
+        if len(request.session['samlUserdata']) > 0:
+            attributes = request.session['samlUserdata'].items()
+    return render(request, 'accounts/attributes.html',
+                  {'paint_logout': paint_logout,
+                   'attributes': attributes})
