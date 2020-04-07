@@ -2,7 +2,6 @@ from django.conf import settings
 from django.urls import include, path
 
 from colossus.apps.core import views as core_views
-from colossus.apps.accounts import views as account_views
 
 
 urlpatterns = [
@@ -11,8 +10,6 @@ urlpatterns = [
     # path('admin/login/', django_saml2_auth.views.signin),
     path('', core_views.dashboard, name='dashboard'),
     path('', include('colossus.apps.subscribers.urls', namespace='subscribers')),
-    path('attrs/', account_views.attributes, name="attrs"),
-    path('metadata/', account_views.metadata, name="metadata"),
     path('setup/', core_views.setup, name='setup'),
     path('setup/account/', core_views.setup_account, name='setup_account'),
     path('settings/', core_views.SiteUpdateView.as_view(), name='settings'),
