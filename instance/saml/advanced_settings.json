@@ -25,8 +25,8 @@
   },
   "organization": {
     "en-US": {
-      "name": "sp_test",
-      "displayname": "SP test",
+      "name": "(NONPRD) Colossus Python Anywhere",
+      "displayname": "(NONPRD) Colossus Python Anywhere",
       "url": "https://colossus.pythonanywhere.com"
     }
   }
