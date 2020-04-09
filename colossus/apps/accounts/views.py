@@ -77,7 +77,9 @@ def ssoLogin(request):
     not_auth_warn = False
 
     if "sso" in req["get_data"]:
-        return HttpResponseRedirect(auth.login())
+        # TODO: Find a better place to put this target_url to redirect user after login success
+        target_url = 'https://colossus.pythonanywhere.com'
+        return HttpResponseRedirect(auth.login(return_to=target_url))
 
     elif "slo" in req["get_data"]:
         name_id = session_index = name_id_format = name_id_nq = name_id_spnq = None
