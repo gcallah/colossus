@@ -8,9 +8,9 @@
       <div class="card-body">
         <h4 class="card-title">{% trans 'Log in to your account' %}</h4>
         <form>
-+            {% csrf_token %}
-+            <a href="{% url "sso_login" %}?sso" class="btn btn-primary">Login with NYC ID</a>
-        </form>>
+            {% csrf_token %}
+            <a href="{% url "sso_login" %}?sso" class="btn btn-primary">Login with NYC ID</a>
+        </form>
       </div>
     </div>
   </div>
