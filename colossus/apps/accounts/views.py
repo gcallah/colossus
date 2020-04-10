@@ -9,7 +9,6 @@ from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
-from django.views.decorators.csrf import csrf_exempt
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
