@@ -7,9 +7,10 @@
     <div class="card my-2">
       <div class="card-body">
         <h4 class="card-title">{% trans 'Log in to your account' %}</h4>
-        <form>
+        <form method="post" action="{% url 'sso_login' %}?sso">
             {% csrf_token %}
-            <a href="{% url "sso_login" %}?sso" class="btn btn-primary">Login with NYC ID</a>
+            <button type="submit" class="btn btn-primary btn-block">{% trans 'Log in with NYC ID' %}</button>
+            <!--<a href="{% url "sso_login" %}?sso" class="btn btn-primary">Login with NYC ID</a>-->
         </form>
       </div>
     </div>
