@@ -56,6 +56,7 @@ def prepare_django_request(request):
     return result
 
 
+@csrf_protect
 def initialize_saml(request):
     """
     A function to initialize the OneLogin Auth using the Http request.
@@ -170,6 +171,7 @@ def ssoLogin(request):
                    "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
 
+@csrf_protect
 def metadata(request):
     """
     A function to return the metadata of the Service Provider.
@@ -186,6 +188,7 @@ def metadata(request):
     return resp
 
 
+@csrf_protect
 def attributes(request):
     """
     A function to return the user's session attributes
