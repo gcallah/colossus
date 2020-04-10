@@ -9,6 +9,7 @@ from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
+from django.views.decorators.csrf import csrf_exempt
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
@@ -53,6 +54,7 @@ def prepare_django_request(request):
     return result
 
 
+@csrf_exempt
 def initialize_saml(request):
     """
     A function to initialize the OneLogin Auth using the Http request.
@@ -62,6 +64,7 @@ def initialize_saml(request):
     return auth
 
 
+@csrf_exempt
 def ssoLogin(request):
     """
     A function to actually authenticate the user using SAML.
@@ -147,6 +150,7 @@ def ssoLogin(request):
                    "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
 
+@csrf_exempt
 def metadata(request):
     """
     A function to return the metadata of the Service Provider.
@@ -163,6 +167,7 @@ def metadata(request):
     return resp
 
 
+@csrf_exempt
 def attributes(request):
     """
     A function to return the user's session attributes
