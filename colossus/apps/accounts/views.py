@@ -1,3 +1,4 @@
+import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
@@ -9,6 +10,8 @@ from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
+from django.views.decorators.csrf import csrf_protect
+logger = logging.getLogger(__name__)
 
 
 class ProfileView(LoginRequiredMixin, UpdateView):
@@ -57,16 +60,17 @@ def initialize_saml(request):
     """
     A function to initialize the OneLogin Auth using the Http request.
     """
-
+    logger.info("Inside Initialize SAML")
     auth = OneLogin_Saml2_Auth(request, custom_base_path=settings.SAML_FOLDER)
     return auth
 
 
+@csrf_protect
 def ssoLogin(request):
     """
     A function to actually authenticate the user using SAML.
     """
-
+    logger.info("Inside SSO Login Function")
     req = prepare_django_request(request)
     auth = initialize_saml(req)
     errors = []
@@ -78,11 +82,14 @@ def ssoLogin(request):
 
     if "sso" in req["get_data"]:
         # TODO: Find a better place to put this target_url to redirect user after login success
-        target_url = 'https://colossus.pythonanywhere.com'
-        return HttpResponseRedirect(auth.login(return_to=target_url))
+        # target_url = 'https://colossus.pythonanywhere.com'
+        logger.info("Inside SSO")
+        return HttpResponseRedirect(auth.login())
 
     elif "slo" in req["get_data"]:
+        logger.info("Inside SLO")
         name_id = session_index = name_id_format = name_id_nq = name_id_spnq = None
+        logger.info("Request Session :", request.session)
         if 'samlNameId' in request.session:
             name_id = request.session['samlNameId']
         if 'samlSessionIndex' in request.session:
@@ -99,8 +106,10 @@ def ssoLogin(request):
                         spnq=name_id_spnq))
 
     elif "acs" in req["get_data"]:
+        logger.info("Inside ACS")
         request_id = None
         if 'AuthNRequestID' in request.session:
+            logger.info("Inside AuthRequestID")
             request_id = request.session['AuthNRequestID']
 
         auth.process_response(request_id=request_id)
@@ -116,15 +125,21 @@ def ssoLogin(request):
             request.session['samlNameIdNameQualifier'] = auth.get_nameid_nq()
             request.session['samlNameIdSPNameQualifier'] = auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = auth.get_session_index()
+            logger.info("Printing Request Session", request.session)
             if 'RelayState' in req['post_data']:
+                logger.info("Inside Relay State")
                 if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
+                    logger.info("Inside Inside Relay State")
                     return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
         elif auth.get_settings().is_debug_active():
+            logger.info("Is Debug Active")
             error_reason = auth.get_last_error_reason()
 
     elif "sls" in req["get_data"]:
+        logger.info("Inside SLS")
         request_id = None
         if "LogoutRequestID" in request.session:
+            logger.info("Inside LogoutRequestID")
             request_id = request.session["LogoutRequestID"]
         dscb = request.session.flush()
         url = auth.process_slo(request_id=request_id, delete_session_cb=dscb)
@@ -138,10 +153,18 @@ def ssoLogin(request):
             error_reason = auth.get_last_error_reason()
 
     if "samlUserdata" in request.session:
+        print("Inside SAML USER DATA")
         paint_logout = True
         if len(request.session["samlUserdata"]) > 0:
             attributes = request.session["samlUserdata"].items()
+            logger.info("Attributes", attributes)
 
+    logger.info("Errors", errors)
+    logger.info("Error Reason", error_reason)
+    logger.info("Not Auth Warn", not_auth_warn)
+    logger.info("Success Slo", success_slo)
+    logger.info("Attributes", attributes)
+    logger.info("Paint Loout", paint_logout)
     return render(request, "registration/login.html",
                   {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
                    "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
