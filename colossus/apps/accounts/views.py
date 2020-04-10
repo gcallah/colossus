@@ -89,7 +89,7 @@ def ssoLogin(request):
     elif "slo" in req["get_data"]:
         logger.info("Inside SLO")
         name_id = session_index = name_id_format = name_id_nq = name_id_spnq = None
-        logger.info("Request Session :", request.session)
+        logger.info("Request Session : {}".format(request.session))
         if 'samlNameId' in request.session:
             name_id = request.session['samlNameId']
         if 'samlSessionIndex' in request.session:
@@ -125,7 +125,7 @@ def ssoLogin(request):
             request.session['samlNameIdNameQualifier'] = auth.get_nameid_nq()
             request.session['samlNameIdSPNameQualifier'] = auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = auth.get_session_index()
-            logger.info("Printing Request Session", request.session)
+            logger.info("Printing Request Session {} ".format(request.session))
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
                 if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
@@ -157,14 +157,14 @@ def ssoLogin(request):
         paint_logout = True
         if len(request.session["samlUserdata"]) > 0:
             attributes = request.session["samlUserdata"].items()
-            logger.info("Attributes", attributes)
+            logger.info("Attributes : {}".format(attributes))
 
-    logger.info("Errors", errors)
-    logger.info("Error Reason", error_reason)
-    logger.info("Not Auth Warn", not_auth_warn)
-    logger.info("Success Slo", success_slo)
-    logger.info("Attributes", attributes)
-    logger.info("Paint Loout", paint_logout)
+    logger.info("Errors : {}".format(errors))
+    logger.info("Error Reason : {}".format(error_reason))
+    logger.info("Not Auth Warn : {}".format(not_auth_warn))
+    logger.info("Success Slo : {}".format(success_slo))
+    logger.info("Attributes : {}".format(attributes))
+    logger.info("Paint Loout : {}".format(paint_logout))
     return render(request, "registration/login.html",
                   {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
                    "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
