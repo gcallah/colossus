@@ -166,7 +166,7 @@ def ssoLogin(request):
     logger.info("Success Slo : {}".format(success_slo))
     logger.info("Attributes : {}".format(attributes))
     logger.info("Paint Loout : {}".format(paint_logout))
-    return render(request, "accounts/profile.html",
+    return render(request, "registration/login.html",
                   {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
                    "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
