@@ -84,7 +84,7 @@ def ssoLogin(request):
     logger.info("Original request : {}".format(request))
     logger.info("Django request : {}".format(req))
 
-    if "sso" in req["post_data"]:
+    if "sso" in req["get_data"]:
         # TODO: Find a better place to put this target_url to redirect user after login success
         target_url = 'https://colossus.pythonanywhere.com'
         logger.info("Inside SSO")
@@ -109,7 +109,7 @@ def ssoLogin(request):
             auth.logout(name_id=name_id, session_index=session_index, nq=name_id_nq, name_id_format=name_id_format,
                         spnq=name_id_spnq))
 
-    elif "acs" in req["post_data"]:
+    elif "acs" in req["get_data"]:
         logger.info("Inside ACS")
         request_id = None
         if 'AuthNRequestID' in request.session:
