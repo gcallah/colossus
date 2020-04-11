@@ -134,9 +134,9 @@ def ssoLogin(request):
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
-                if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
-                    logger.info("Inside Inside Relay State")
-                    return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
+                #if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
+                #   logger.info("Inside Inside Relay State")
+                return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
         elif auth.get_settings().is_debug_active():
             logger.info("Is Debug Active")
             error_reason = auth.get_last_error_reason()
