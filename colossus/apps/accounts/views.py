@@ -81,6 +81,9 @@ def ssoLogin(request):
     paint_logout = False
     not_auth_warn = False
 
+    logger.info("Original request : {}".format(request))
+    logger.info("Django request : {}".format(req))
+
     if "sso" in req["post_data"]:
         # TODO: Find a better place to put this target_url to redirect user after login success
         target_url = 'https://colossus.pythonanywhere.com'
