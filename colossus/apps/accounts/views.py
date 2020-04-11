@@ -130,6 +130,8 @@ def ssoLogin(request):
             request.session['samlNameIdSPNameQualifier'] = auth.get_nameid_spnq()
             request.session['samlSessionIndex'] = auth.get_session_index()
             logger.info("Printing Request Session {} ".format(request.session))
+            logger.info("Relay state : {}".format(req['post_data']['RelayState']))
+            logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
                 if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
