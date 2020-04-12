@@ -135,12 +135,13 @@ def ssoLogin(request):
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             user = get_user_model()
             if user is not None:
-                logger.info("USER DETAILS {}".format(len(user.objects.all())))
+                for u in user.objects.all():
+                    logger.info("USER DETAILS {}".format(u.get_username()))
             form = AdminUserCreationForm(data={
-                                                'username': 'username1',
-                                                'email': 'user.name1@example.com',
-                                                'password1': 'password123',
-                                                'password2': 'password123'
+                                                'username': 'username2',
+                                                'email': 'user.name2@example.com',
+                                                'password1': 'Password@12345',
+                                                'password2': 'Password@12345'
             })
             user = form.save()
             login(request, user)
