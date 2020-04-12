@@ -2,7 +2,7 @@ import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
-from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
+from colossus.apps.accounts.forms import UserForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.conf import settings
@@ -136,34 +136,35 @@ def ssoLogin(request):
             allUsers = get_user_model()
             logger.info("djm746 allUsers {}".format(allUsers))
             oldUser = False
-            currentuser = None
+            currentUser = None
+            sessionAttributes = request.session
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
-                    logger.info("USER DETAILS {}".format(u.get_username()))
-                    if(u.get_username() == "username2"):
+                    logger.info("USER DETAILS {}".format(u.email))
+                    if(u.email == sessionAttributes["samlUserdata"]['mail']):
                         logger.info("djm746 username2 found")
                         login(request, u)
                         oldUser = True
-                        currentuser = u
+                        currentUser = u
             if(oldUser is False):
                 logger.info("djm746 new user")
-                newform = AdminUserCreationForm(data={
-                                                    'username': 'username2',
-                                                    'email': 'user.name2@example.com',
-                                                    'password1': 'Password@12345',
-                                                    'password2': 'Password@12345'
+                newform = UserForm(data={
+                                                    'email': sessionAttributes["samlUserdata"]['mail'],
+                                                    'password': sessionAttributes["samlUserdata"]['GUID'],
+                                                    'timezone': 'America/New_York'
                 })
-                isValidForm = newform.is_valid()
-                if isValidForm is True:
+                if newform.is_valid() is True:
                     logger.info("djm746 isValidForm")
                     user = newform.save()
+                    logger.info('Logging in')
                     login(request, user)
+                    logger.info('Logged in')
                 else:
                     logger.info("Form Error {}".format(newform.errors))
-            if currentuser is not None:
-                logger.info("Current USER DETAILS {}".format(currentuser))
+            if currentUser is not None:
+                logger.info("Current USER DETAILS {}".format(currentUser))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
