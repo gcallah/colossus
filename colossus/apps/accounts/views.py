@@ -137,21 +137,23 @@ def ssoLogin(request):
             attributes = request.session["samlUserdata"].items()
             userEmail = attributes['mail']
             userName = attributes['givenName']
+            logger.info("USER EMAIL {}".format(userEmail))
+            logger.info("USER NAME {}".format(userName))
 
             form = UserForm(data={
-                                    'first_name': userName,
+                                    'first_name': 'Test1',
                                     'last_name': '',
-                                    'email': userEmail,
+                                    'email': 'sample@sample.com',
                                     'timezone': 'America/New_York'
             })
             user = form.save()
-            print("USER USERNAME : {}".format(user.email))
+            logger.info("USER USERNAME : {}".format(user.email))
             login(request, user)
             user = get_user_model()
             try:
-                print("USER USERNAME user.get_username: {}".format(user.get_username()))
-                print("Print USER {}".format(user))
-                print("USER.USERNAME {}".format(user.email))
+                logger.info("USER USERNAME user.get_username: {}".format(user.get_username()))
+                logger.info("Print USER {}".format(user))
+                logger.info("USER.USERNAME {}".format(user.username))
             except Exception:
                 pass
             if 'RelayState' in req['post_data']:
