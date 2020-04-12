@@ -139,8 +139,8 @@ def ssoLogin(request):
             form = AdminUserCreationForm(data={
                                                 'username': 'username1',
                                                 'email': 'user.name1@example.com',
-                                                'password1': '12345678',
-                                                'password2': '12345678'
+                                                'password1': 'password123',
+                                                'password2': 'password123'
             })
             user = form.save()
             login(request, user)
