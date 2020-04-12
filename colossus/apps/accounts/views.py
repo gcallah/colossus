@@ -141,7 +141,7 @@ def ssoLogin(request):
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
-                    if(u.get_user_name() == "username2"):
+                    if(u.get_username() == "username2"):
                         login(request, u)
                         oldUser = True
             if(oldUser is False):
