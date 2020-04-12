@@ -134,7 +134,7 @@ def ssoLogin(request):
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             allUsers = get_user_model()
-            logger.info("djm746 allUsers".format(allUsers))
+            logger.info("djm746 allUsers {}".format(allUsers))
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
