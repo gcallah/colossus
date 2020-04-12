@@ -2,7 +2,7 @@ import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
-from colossus.apps.accounts.forms import UserForm
+from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.conf import settings
@@ -133,14 +133,14 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-            # user = get_user_model()
-            # if user is not None:
-            #     logger.info("USER DETAILS {}".format(len(user.objects.all())))
-            form = UserForm(data={
-                                    'first_name': 'Random1',
-                                    'last_name': '',
-                                    'email': 'random1@random1.com',
-                                    'timezone': 'America/New_York'
+            user = get_user_model()
+            if user is not None:
+                logger.info("USER DETAILS {}".format(len(user.objects.all())))
+            form = AdminUserCreationForm(data={
+                                                'username': 'username1',
+                                                'email': 'user.name1@example.com',
+                                                'password1': '12345678',
+                                                'password2': '12345678'
             })
             user = form.save()
             login(request, user)
