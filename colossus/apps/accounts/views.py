@@ -133,24 +133,23 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-
-            attributes = request.session["samlUserdata"].items()
-            userEmail = attributes['mail']
-            userName = attributes['givenName']
-            logger.info("USER EMAIL {}".format(userEmail))
-            logger.info("USER NAME {}".format(userName))
-
-            form = UserForm(data={
-                                    'first_name': 'Test1',
-                                    'last_name': '',
-                                    'email': 'sample@sample.com',
-                                    'timezone': 'America/New_York'
-            })
-            user = form.save()
-            logger.info("USER USERNAME : {}".format(user.email))
-            login(request, user)
-            user = get_user_model()
             try:
+                attributes = request.session["samlUserdata"].items()
+                userEmail = attributes["mail"]
+                userName = attributes["givenName"]
+                logger.info("USER EMAIL {}".format(userEmail))
+                logger.info("USER NAME {}".format(userName))
+
+                form = UserForm(data={
+                                        'first_name': 'Test1',
+                                        'last_name': '',
+                                        'email': 'sample@sample.com',
+                                        'timezone': 'America/New_York'
+                })
+                user = form.save()
+                logger.info("USER USERNAME : {}".format(user.email))
+                login(request, user)
+                user = get_user_model()
                 logger.info("USER USERNAME user.get_username: {}".format(user.get_username()))
                 logger.info("Print USER {}".format(user))
                 logger.info("USER.USERNAME {}".format(user.username))
