@@ -135,21 +135,25 @@ def ssoLogin(request):
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
 
             attributes = request.session["samlUserdata"].items()
-            # userGUID = attributes['GUID'][0]
-            # userEmail = attributes['mail'][0]
-            # userName = attributes['givenName'][0]
+            userEmail = attributes['mail']
+            userName = attributes['givenName']
 
             form = UserForm(data={
-                                    'username': "12345",
-                                    'email': "sample@sample.com",
-                                    'password1': "12345",
-                                    'password2': "12345"
+                                    'first_name': userName,
+                                    'last_name': '',
+                                    'email': userEmail,
+                                    'timezone': 'America/New_York'
             })
             user = form.save()
-            print("USER USERNAME : {}".format(user.username))
+            print("USER USERNAME : {}".format(user.email))
             login(request, user)
             user = get_user_model()
-            print("USER USERNAME AGAIN: {}".format(user.username))
+            try:
+                print("USER USERNAME user.get_username: {}".format(user.get_username()))
+                print("Print USER {}".format(user))
+                print("USER.USERNAME {}".format(user.email))
+            except Exception:
+                pass
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
                 # if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
