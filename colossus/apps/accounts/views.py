@@ -135,27 +135,32 @@ def ssoLogin(request):
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             allUsers = get_user_model()
             logger.info("djm746 allUsers {}".format(allUsers))
+            oldUser = False
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
-            newform = AdminUserCreationForm(data={
-                                                'username': 'username2',
-                                                'email': 'user.name2@example.com',
-                                                'password1': 'Password@12345',
-                                                'password2': 'Password@12345'
-            })
-            isValidForm = newform.is_valid()
-            if isValidForm is True:
-                logger.info("djm746 isValidForm")
-                user = newform.save()
-                login(request, user)
-            else:
-                logger.info("Form Error {}".format(newform.errors))
+                    if(u.get_user_name() == "username2"):
+                        login(request, u)
+                        oldUser = True
+            if(oldUser is False):
+                newform = AdminUserCreationForm(data={
+                                                    'username': 'username2',
+                                                    'email': 'user.name2@example.com',
+                                                    'password1': 'Password@12345',
+                                                    'password2': 'Password@12345'
+                })
+                isValidForm = newform.is_valid()
+                if isValidForm is True:
+                    logger.info("djm746 isValidForm")
+                    user = newform.save()
+                    login(request, user)
+                else:
+                    logger.info("Form Error {}".format(newform.errors))
             currentuser = get_user_model()
             if currentuser is not None:
-                logger.info("Current USER DETAILS {}".format(len(currentuser.objects.all())))
+                logger.info("Current USER DETAILS {}".format(currentuser.get_username()))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
