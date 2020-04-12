@@ -133,12 +133,6 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-
-            userEmail = auth.get_attributes("mail")
-            userName = auth.get_attributes("givenName")
-            logger.info("USER EMAIL {}".format(userEmail))
-            logger.info("USER NAME {}".format(userName))
-
             form = UserForm(data={
                                     'first_name': 'Test1',
                                     'last_name': '',
@@ -149,6 +143,7 @@ def ssoLogin(request):
             logger.info("USER USERNAME : {}".format(user.email))
             login(request, user)
             user = get_user_model()
+            logger.info("USER DETAILS {}".format(user))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
