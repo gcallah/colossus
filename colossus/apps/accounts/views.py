@@ -133,21 +133,25 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-            user = get_user_model()
-            if user is not None:
-                for u in user.objects.all():
+            allUsers = get_user_model()
+            if allUsers is not None:
+                for u in allUsers.objects.all():
                     logger.info("USER DETAILS {}".format(u.get_username()))
-            form = AdminUserCreationForm(data={
+            newform = AdminUserCreationForm(data={
                                                 'username': 'username2',
                                                 'email': 'user.name2@example.com',
                                                 'password1': 'Password@12345',
                                                 'password2': 'Password@12345'
             })
-            user = form.save()
-            login(request, user)
-            user = get_user_model()
-            if user is not None:
-                logger.info("USER DETAILS {}".format(len(user.objects.all())))
+            isValidForm = newform.is_valid()
+            if isValidForm is True:
+                user = newform.save()
+                login(request, user)
+            else:
+                logger.info("Form Error {}".format(newform.errors))
+            currentuser = get_user_model()
+            if currentuser is not None:
+                logger.info("Current USER DETAILS {}".format(len(currentuser.objects.all())))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
