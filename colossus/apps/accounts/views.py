@@ -133,17 +133,16 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-            user = get_user_model()
-            if user is not None:
-                logger.info("USER DETAILS {}".format(len(user.objects.all())))
+            # user = get_user_model()
+            # if user is not None:
+            #     logger.info("USER DETAILS {}".format(len(user.objects.all())))
             form = UserForm(data={
-                                    'first_name': 'Test3',
+                                    'first_name': 'Random1',
                                     'last_name': '',
-                                    'email': 'sample3@sample.com',
+                                    'email': 'random1@random1.com',
                                     'timezone': 'America/New_York'
             })
             user = form.save()
-            logger.info("USER USERNAME : {}".format(user.email))
             login(request, user)
             user = get_user_model()
             if user is not None:
