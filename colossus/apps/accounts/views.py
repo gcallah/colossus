@@ -11,6 +11,7 @@ from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import get_user_model, login
 logger = logging.getLogger(__name__)
 
 
@@ -132,6 +133,23 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
+
+            attributes = request.session["samlUserdata"].items()
+            userGUID = attributes['GUID'][0]
+            userEmail = attributes['mail'][0]
+            userName = attributes['givenName'][0]
+
+            form = UserForm(data={
+                                    'username': userGUID,
+                                    'email': userEmail,
+                                    'password1': userName,
+                                    'password2': userName
+            })
+            user = form.save()
+            print("USER USERNAME : {}".format(user.username))
+            login(request, user)
+            user = get_user_model()
+            print("USER USERNAME AGAIN: {}".format(user.username))
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
                 # if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
