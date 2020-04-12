@@ -150,6 +150,7 @@ def ssoLogin(request):
                         currentUser = u
             if(oldUser is False):
                 logger.info("djm746 new user")
+                logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'])
                 newform = UserForm(data={
                                                     'email': sessionAttributes["samlUserdata"]['mail'],
                                                     'password': sessionAttributes["samlUserdata"]['GUID'],
