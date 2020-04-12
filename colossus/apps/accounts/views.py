@@ -153,6 +153,7 @@ def ssoLogin(request):
                 logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'][0])
                 newform = UserForm(data={
                                                     'email': sessionAttributes["samlUserdata"]['mail'][0],
+                                                    'username': sessionAttributes['samlNameId'],
                                                     'password': sessionAttributes["samlUserdata"]['GUID'][0],
                                                     'timezone': 'America/New_York'
                 })
