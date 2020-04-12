@@ -136,15 +136,19 @@ def ssoLogin(request):
             allUsers = get_user_model()
             logger.info("djm746 allUsers {}".format(allUsers))
             oldUser = False
+            currentuser = None
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
                     if(u.get_username() == "username2"):
+                        logger.info("djm746 username2 found")
                         login(request, u)
                         oldUser = True
+                        currentuser = u
             if(oldUser is False):
+                logger.info("djm746 new user")
                 newform = AdminUserCreationForm(data={
                                                     'username': 'username2',
                                                     'email': 'user.name2@example.com',
@@ -158,9 +162,8 @@ def ssoLogin(request):
                     login(request, user)
                 else:
                     logger.info("Form Error {}".format(newform.errors))
-            currentuser = get_user_model()
             if currentuser is not None:
-                logger.info("Current USER DETAILS {}".format(currentuser.get_username()))
+                logger.info("Current USER DETAILS {}".format(currentuser))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
