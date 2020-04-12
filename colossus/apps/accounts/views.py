@@ -143,17 +143,17 @@ def ssoLogin(request):
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.email))
-                    if(u.email == sessionAttributes["samlUserdata"]['mail']):
+                    if(u.email == sessionAttributes["samlUserdata"]['mail'][0]):
                         logger.info("djm746 username2 found")
                         login(request, u)
                         oldUser = True
                         currentUser = u
             if(oldUser is False):
                 logger.info("djm746 new user")
-                logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'])
+                logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'][0])
                 newform = UserForm(data={
-                                                    'email': sessionAttributes["samlUserdata"]['mail'],
-                                                    'password': sessionAttributes["samlUserdata"]['GUID'],
+                                                    'email': sessionAttributes["samlUserdata"]['mail'][0],
+                                                    'password': sessionAttributes["samlUserdata"]['GUID'][0],
                                                     'timezone': 'America/New_York'
                 })
                 if newform.is_valid() is True:
