@@ -135,15 +135,15 @@ def ssoLogin(request):
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
 
             attributes = request.session["samlUserdata"].items()
-            userGUID = attributes['GUID'][0]
-            userEmail = attributes['mail'][0]
-            userName = attributes['givenName'][0]
+            # userGUID = attributes['GUID'][0]
+            # userEmail = attributes['mail'][0]
+            # userName = attributes['givenName'][0]
 
             form = UserForm(data={
-                                    'username': userGUID,
-                                    'email': userEmail,
-                                    'password1': userName,
-                                    'password2': userName
+                                    'username': "12345",
+                                    'email': "sample@sample.com",
+                                    'password1': "12345",
+                                    'password2': "12345"
             })
             user = form.save()
             print("USER USERNAME : {}".format(user.username))
