@@ -137,15 +137,14 @@ def ssoLogin(request):
             if user is not None:
                 logger.info("USER DETAILS {}".format(len(user.objects.all())))
             form = UserForm(data={
-                                    'first_name': 'Test2',
+                                    'first_name': 'Test3',
                                     'last_name': '',
-                                    'email': 'sample1@sample.com',
+                                    'email': 'sample3@sample.com',
                                     'timezone': 'America/New_York'
             })
             user = form.save()
             logger.info("USER USERNAME : {}".format(user.email))
             login(request, user)
-
             user = get_user_model()
             if user is not None:
                 logger.info("USER DETAILS {}".format(len(user.objects.all())))
