@@ -134,9 +134,8 @@ def ssoLogin(request):
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
             try:
-                attributes = request.session["samlUserdata"].items()
-                userEmail = attributes["mail"]
-                userName = attributes["givenName"]
+                userEmail = auth.get_attributes("mail")
+                userName = auth.get_attributes("givenName")
                 logger.info("USER EMAIL {}".format(userEmail))
                 logger.info("USER NAME {}".format(userName))
 
