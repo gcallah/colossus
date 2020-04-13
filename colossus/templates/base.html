@@ -75,7 +75,7 @@
             <a class="dropdown-item" href="{% url 'settings' %}">{% trans 'Account settings' %}</a>
             <a class="dropdown-item" href="{% url 'password_change' %}">{% trans 'Change password' %}</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{% url 'saml' %}?slo">{% trans 'Log out' %}</a>
+            <a class="dropdown-item" href="{% url 'sso_login' %}?slo">{% trans 'Log out' %}</a>
           </div>
         </li>
       </ul>
