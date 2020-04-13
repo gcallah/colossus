@@ -142,31 +142,31 @@ def ssoLogin(request):
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
-                    logger.info("USER DETAILS {}".format(u.email))
-                    if(u.email == sessionAttributes["samlUserdata"]['mail'][0]):
-                        logger.info("djm746 username2 found")
+                    logger.info("USER DETAILS {}".format(u.get_username()))
+                    if(u.get_username() == sessionAttributes['samlNameId']):
+                        logger.info("User " + sessionAttributes['samlNameId'] + " found")
                         login(request, u)
                         oldUser = True
                         currentUser = u
+                        break
             if(oldUser is False):
                 logger.info("djm746 new user")
                 logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'][0])
                 newform = UserForm(data={
-                                                    'email': sessionAttributes["samlUserdata"]['mail'][0],
                                                     'username': sessionAttributes['samlNameId'],
+                                                    'email': sessionAttributes["samlUserdata"]['mail'][0],
                                                     'password': sessionAttributes["samlUserdata"]['GUID'][0],
                                                     'timezone': 'America/New_York'
                 })
                 if newform.is_valid() is True:
                     logger.info("djm746 isValidForm")
-                    user = newform.save()
-                    logger.info('Logging in')
-                    login(request, user)
+                    currentUser = newform.save()
+                    logger.info('Logging in new user : ' + currentUser)
+                    login(request, currentUser)
                     logger.info('Logged in')
                 else:
                     logger.info("Form Error {}".format(newform.errors))
-            if currentUser is not None:
-                logger.info("Current USER DETAILS {}".format(currentUser))
+            logger.info("Current USER DETAILS {}".format(currentUser))
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
