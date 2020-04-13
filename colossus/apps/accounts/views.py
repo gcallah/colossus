@@ -138,25 +138,27 @@ def ssoLogin(request):
             oldUser = False
             currentUser = None
             sessionAttributes = request.session
+            currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
+            currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
-                    if(u.get_username() == sessionAttributes['samlNameId']):
-                        logger.info("User " + sessionAttributes['samlNameId'] + " found")
+                    if(u.get_username() == currentUserEmail):
+                        logger.info("User {} found".format(currentUserGUID))
                         login(request, u)
                         oldUser = True
                         currentUser = u
                         break
             if(oldUser is False):
                 logger.info("djm746 new user")
-                logger.info("New user email : "+sessionAttributes["mail"][0])
+                logger.info("New user email : {}".format(currentUserEmail))
                 newform = AdminUserCreationForm(data={
-                                                    'username': sessionAttributes["samlUserdata"]["GUID"][0],
-                                                    'email': sessionAttributes["samlUserdata"]["mail"][0],
-                                                    'password1': sessionAttributes["samlUserdata"]["GUID"][0][::-1],
-                                                    'password2': sessionAttributes["samlUserdata"]["GUID"][0][::-1]
+                                                    'username': currentUserEmail,
+                                                    'email': currentUserEmail,
+                                                    'password1': currentUserGUID[::-1],
+                                                    'password2': currentUserGUID[::-1]
                 })
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
