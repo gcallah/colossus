@@ -107,6 +107,7 @@ def ssoLogin(request):
             name_id_spnq = request.session['samlNameIdSPNameQualifier']
 
         logout(request)
+        logger.info("Logged out!")
         return HttpResponseRedirect(
             auth.logout(name_id=name_id, session_index=session_index, nq=name_id_nq, name_id_format=name_id_format,
                         spnq=name_id_spnq))
