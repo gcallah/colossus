@@ -11,7 +11,7 @@ from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 logger = logging.getLogger(__name__)
 
 
@@ -106,6 +106,7 @@ def ssoLogin(request):
         if 'samlNameIdSPNameQualifier' in request.session:
             name_id_spnq = request.session['samlNameIdSPNameQualifier']
 
+        logout(request)
         return HttpResponseRedirect(
             auth.logout(name_id=name_id, session_index=session_index, nq=name_id_nq, name_id_format=name_id_format,
                         spnq=name_id_spnq))
