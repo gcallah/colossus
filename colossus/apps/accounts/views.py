@@ -151,14 +151,14 @@ def ssoLogin(request):
                         break
             if(oldUser is False):
                 logger.info("djm746 new user")
-                logger.info("New user email : "+sessionAttributes["samlUserdata"]['mail'][0])
+                logger.info("New user email : "+sessionAttributes["samlNameId"])
                 newform = UserForm(data={
                                                     'username': sessionAttributes['samlNameId'],
                                                     'email': sessionAttributes["samlUserdata"]['mail'][0],
                                                     'password': sessionAttributes["samlUserdata"]['GUID'][0],
                                                     'timezone': 'America/New_York'
                 })
-                if newform.is_valid() is True:
+                if newform.is_valid():
                     logger.info("djm746 isValidForm")
                     currentUser = newform.save()
                     logger.info('Logging in new user : ' + currentUser)
