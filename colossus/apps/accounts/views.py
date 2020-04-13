@@ -163,7 +163,7 @@ def ssoLogin(request):
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
                     currentUser = newform.save()
-                    logger.info('Logging in new user : ' + currentUser)
+                    logger.info('Logging in new user : {}'.format(currentUser))
                     login(request, currentUser)
                     logger.info('Logged in')
                 else:
