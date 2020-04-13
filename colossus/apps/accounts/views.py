@@ -86,9 +86,11 @@ def ssoLogin(request):
     logger.info("Django request : {}".format(req))
 
     if "sso" in req["get_data"]:
-        # TODO: Find a better place to put this target_url to redirect user after login success
-        target_url = '/'
         logger.info("Inside SSO")
+        if 'next' in request.POST:
+            target_url = req['post_data']['next']
+        else:
+            target_url = '/'
         return HttpResponseRedirect(auth.login(return_to=target_url))
 
     elif "slo" in req["get_data"]:
