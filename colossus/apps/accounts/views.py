@@ -1,10 +1,11 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
@@ -92,6 +93,10 @@ def ssoLogin(request):
         else:
             target_url = '/'
         return HttpResponseRedirect(auth.login(return_to=target_url))
+
+    elif 'sso2' in req['get_data']:
+        return_to = OneLogin_Saml2_Utils.get_self_url(req) + reverse('attrs')
+        return HttpResponseRedirect(auth.login(return_to))
 
     elif "slo" in req["get_data"]:
         logger.info("Inside SLO")
@@ -236,6 +241,7 @@ def metadata(request):
 
 
 @csrf_exempt
+@login_required()
 def attributes(request):
     """
     A function to return the user's session attributes
