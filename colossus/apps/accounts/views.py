@@ -2,7 +2,7 @@ import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView
-from colossus.apps.accounts.forms import UserForm
+from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.conf import settings
@@ -151,14 +151,12 @@ def ssoLogin(request):
                         break
             if(oldUser is False):
                 logger.info("djm746 new user")
-                logger.info("New user email : "+sessionAttributes["samlNameId"])
-                newform = UserForm(data={
-                                                    'username': sessionAttributes['samlNameId'],
-                                                    'first_name': sessionAttributes['samlNameId'],
-                                                    'last_name': sessionAttributes['samlNameId'],
-                                                    'email': sessionAttributes["samlUserdata"]['mail'][0],
-                                                    'password': sessionAttributes["samlUserdata"]['GUID'][0],
-                                                    'timezone': 'America/New_York'
+                logger.info("New user email : "+sessionAttributes["mail"][0])
+                newform = AdminUserCreationForm(data={
+                                                    'username': sessionAttributes["samlUserdata"]["GUID"][0],
+                                                    'email': sessionAttributes["samlUserdata"]["mail"][0],
+                                                    'password1': sessionAttributes["samlUserdata"]["GUID"][0][::-1],
+                                                    'password2': sessionAttributes["samlUserdata"]["GUID"][0][::-1]
                 })
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
