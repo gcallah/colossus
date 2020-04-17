@@ -11,10 +11,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_URL = "/auth/saml"
 
-CSRF_TRUSTED_ORIGINS = ['.nonprd-login.nyc.gov']
+CSRF_TRUSTED_ORIGINS = ['.nonprd-login.nyc.gov', 'colossus.pythonanywhere.com']
 CSRF_COOKIE_DOMAIN = 'nonprd-login.nyc.gov'
 CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = True
 
 # ==============================================================================
 # CORE SETTINGS
