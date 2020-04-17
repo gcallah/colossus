@@ -13,6 +13,8 @@ LOGIN_URL = "/auth/saml"
 
 CSRF_TRUSTED_ORIGINS = ['.nonprd-login.nyc.gov']
 CSRF_COOKIE_DOMAIN = 'nonprd-login.nyc.gov'
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
 
 # ==============================================================================
 # CORE SETTINGS
