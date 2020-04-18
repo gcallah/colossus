@@ -7,7 +7,7 @@ from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
@@ -58,7 +58,6 @@ def prepare_django_request(request):
     return result
 
 
-@ensure_csrf_cookie
 def initialize_saml(request):
     """
     A function to initialize the OneLogin Auth using the Http request.
@@ -218,12 +217,11 @@ def ssoLogin(request):
     logger.info("Success Slo : {}".format(success_slo))
     logger.info("Attributes : {}".format(attributes))
     logger.info("Paint Loout : {}".format(paint_logout))
-    return render(request, "registration/login.html",
-                  {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
-                   "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
+    return render_to_response(request, "registration/login.html",
+                              {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
+                               "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
 
-@ensure_csrf_cookie
 def metadata(request):
     """
     A function to return the metadata of the Service Provider.
