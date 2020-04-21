@@ -15,7 +15,7 @@ from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.middleware.csrf import get_token
+# from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
 
 
@@ -226,8 +226,13 @@ class LoginView(View):
         response = render(request, "registration/login.html",
                           {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
                            "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
-        response.set_cookie(key='csrftoken', value=get_token())
-        logger.info("CSRF TOKEN VALUE {}".format(get_token()))
+        if "csrfmiddlewaretoken" in req["post_data"]:
+            logger.info("Inside If csrfmiddlewaretoken")
+            csrftoken = req["post_data"]["csrfmiddlewaretoken"][0]
+            response.set_cookie(key='csrftoken', value=csrftoken)
+            logger.info("CSRF TOKEN VALUE {}".format(csrftoken))
+        else:
+            logger.info("Inside Else csrfmiddlewaretoken")
         return response
 
 
