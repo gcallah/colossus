@@ -15,6 +15,7 @@ from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
 from django.utils.decorators import method_decorator
 from django.views import View
+from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
 
 
@@ -222,9 +223,11 @@ class LoginView(View):
         logger.info("Success Slo : {}".format(success_slo))
         logger.info("Attributes : {}".format(attributes))
         logger.info("Paint Loout : {}".format(paint_logout))
-        return render(request, "registration/login.html",
-                      {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
-                       "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
+        response = render(request, "registration/login.html",
+                          {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
+                           "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
+        response.set_cookie(key='csrftoken', value=get_token())
+        return response
 
 
 def metadata(request):
