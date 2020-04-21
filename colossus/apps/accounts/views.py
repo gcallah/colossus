@@ -92,11 +92,11 @@ class LoginView(View):
 
         if "sso" in req["get_data"]:
             logger.info("Inside SSO")
-            if 'next' in request.POST:
-                target_url = req['post_data']['next']
-            else:
-                target_url = '/'
-            return HttpResponseRedirect(auth.login(return_to=target_url))
+            # if 'next' in request.POST:
+            #     target_url = req['post_data']['next']
+            # else:
+            #     target_url = '/'
+            return HttpResponseRedirect(auth.login())
 
         elif 'sso2' in req['get_data']:
             return_to = OneLogin_Saml2_Utils.get_self_url(req) + reverse('attrs')
