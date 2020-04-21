@@ -1,7 +1,7 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
-from django.views.decorators.csrf import ensure_csrf_cookie
+# from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
@@ -13,7 +13,7 @@ from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
-from django.utils.decorators import method_decorator
+# from django.utils.decorators import method_decorator
 from django.views import View
 # from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
@@ -69,7 +69,6 @@ class LoginView(View):
         auth = OneLogin_Saml2_Auth(request, custom_base_path=settings.SAML_FOLDER)
         return auth
 
-    @method_decorator(ensure_csrf_cookie)
     def get(self, request, *args, **kwargs):
         """
         A function to actually authenticate the user using SAML.
