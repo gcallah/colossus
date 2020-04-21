@@ -227,6 +227,7 @@ class LoginView(View):
                           {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
                            "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
         response.set_cookie(key='csrftoken', value=get_token())
+        logger.info("CSRF TOKEN VALUE {}".format(get_token()))
         return response
 
 
