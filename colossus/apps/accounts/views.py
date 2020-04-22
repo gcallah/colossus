@@ -99,6 +99,7 @@ class LoginView(View):
             response = HttpResponseRedirect(auth.login())
             response.set_cookie(key='csrftoken', value=csrftoken2)
             logger.info("CSRF TOKEN VALUE {}".format(csrftoken2))
+            logger.info("Django Response {}".format(response))
             return response
 
         elif 'sso2' in req['get_data']:
