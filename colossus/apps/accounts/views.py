@@ -93,7 +93,7 @@ class LoginView(View):
         if "sso" in req["get_data"]:
             logger.info("Inside SSO")
             logger.info("Inside SSO csrfmiddlewaretoken")
-            csrftoken2 = get_token()
+            csrftoken2 = get_token(request)
             logger.info("ANOTHER CSRF TOKEN VALUE {}".format(csrftoken2))
             csrftoken = req["post_data"]["csrfmiddlewaretoken"]
             response = HttpResponseRedirect(auth.login())
