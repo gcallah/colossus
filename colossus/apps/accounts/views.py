@@ -69,7 +69,7 @@ class LoginView(View):
         auth = OneLogin_Saml2_Auth(request, custom_base_path=settings.SAML_FOLDER)
         return auth
 
-    @method_decorator(ensure_csrf_cookie)
+    @method_decorator(csrf_exempt)
     def get(self, request, *args, **kwargs):
         """
         A function to actually authenticate the user using SAML.
@@ -99,16 +99,6 @@ class LoginView(View):
             else:
                 target_url = '/'
             return HttpResponseRedirect(auth.login(return_to=target_url))
-            '''
-            logger.info("Inside SSO csrfmiddlewaretoken")
-            csrftoken2 = get_token(request)
-            logger.info("ANOTHER CSRF TOKEN VALUE {}".format(csrftoken2))
-            csrftoken = req["post_data"]["csrfmiddlewaretoken"]
-            response = HttpResponseRedirect(auth.login())
-            response.set_cookie(key='csrftoken', value=csrftoken2)
-            logger.info("CSRF TOKEN VALUE {}".format(csrftoken2))
-            return response
-            '''
 
         elif 'sso2' in req['get_data']:
             return_to = OneLogin_Saml2_Utils.get_self_url(req) + reverse('attrs')
