@@ -13,7 +13,7 @@ LOGIN_URL = "/auth/saml"
 
 CSRF_COOKIE_NAME = "csrftoken"
 CSRF_TRUSTED_ORIGINS = ['.gigya.com', '.nyc.gov', 'colossus.pythonanywhere.com']
-# CSRF_COOKIE_DOMAIN = '.nonprd-login.nyc.gov'
+CSRF_COOKIE_DOMAIN = '.nonprd-login.nyc.gov'
 CSRF_COOKIE_SECURE = False
 
 # ==============================================================================
