@@ -92,13 +92,9 @@ class LoginView(View):
 
         if "sso" in req["get_data"]:
             logger.info("Inside SSO")
-            if 'next' in request.POST:
-                target_url = req['post_data']['next']
-            else:
-                target_url = '/'
             logger.info("Inside SSO csrfmiddlewaretoken")
-            csrftoken = req["post_data"]["csrfmiddlewaretoken"][0]
-            response = HttpResponse(auth.login(target_url))
+            csrftoken = req["post_data"]["csrfmiddlewaretoken"]
+            response = HttpResponseRedirect(auth.login())
             response.set_cookie(key='csrftoken', value=csrftoken)
             logger.info("CSRF TOKEN VALUE {}".format(csrftoken))
             return response
