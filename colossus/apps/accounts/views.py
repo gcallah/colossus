@@ -60,6 +60,7 @@ class LoginView(View):
         }
         return result
 
+    @method_decorator(csrf_exempt)
     def initialize_saml(self, request):
         """
         A function to initialize the OneLogin Auth using the Http request.
