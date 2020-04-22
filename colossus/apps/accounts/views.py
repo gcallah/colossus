@@ -224,17 +224,9 @@ class LoginView(View):
         logger.info("Success Slo : {}".format(success_slo))
         logger.info("Attributes : {}".format(attributes))
         logger.info("Paint Loout : {}".format(paint_logout))
-        response = render(request, "registration/login.html",
-                          {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
-                           "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
-        if "csrfmiddlewaretoken" in req["post_data"]:
-            logger.info("Inside If csrfmiddlewaretoken")
-            csrftoken = req["post_data"]["csrfmiddlewaretoken"][0]
-            response.set_cookie(key='csrftoken', value=csrftoken)
-            logger.info("CSRF TOKEN VALUE {}".format(csrftoken))
-        else:
-            logger.info("Inside Else csrfmiddlewaretoken")
-        return response
+        return render(request, "registration/login.html",
+                      {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
+                       "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
 
 
 def metadata(request):
