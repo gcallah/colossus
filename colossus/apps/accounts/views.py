@@ -6,6 +6,7 @@ from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
@@ -57,6 +58,7 @@ def prepare_django_request(request):
     return result
 
 
+@csrf_exempt
 def initialize_saml(request):
     """
     A function to initialize the OneLogin Auth using the Http request.
@@ -66,6 +68,7 @@ def initialize_saml(request):
     return auth
 
 
+@csrf_exempt
 def ssoLogin(request):
     """
     A function to actually authenticate the user using SAML.
