@@ -97,8 +97,8 @@ class LoginView(View):
             logger.info("ANOTHER CSRF TOKEN VALUE {}".format(csrftoken2))
             csrftoken = req["post_data"]["csrfmiddlewaretoken"]
             response = HttpResponseRedirect(auth.login())
-            response.set_cookie(key='csrftoken', value=csrftoken)
-            logger.info("CSRF TOKEN VALUE {}".format(csrftoken))
+            response.set_cookie(key='csrftoken', value=csrftoken2)
+            logger.info("CSRF TOKEN VALUE {}".format(csrftoken2))
             return response
 
         elif 'sso2' in req['get_data']:
