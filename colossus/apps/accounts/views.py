@@ -1,7 +1,7 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
@@ -15,7 +15,6 @@ from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
 from django.utils.decorators import method_decorator
 from django.views import View
-# from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
 
 
