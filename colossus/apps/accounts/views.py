@@ -96,7 +96,8 @@ class LoginView(View):
             csrftoken2 = get_token(request)
             logger.info("ANOTHER CSRF TOKEN VALUE {}".format(csrftoken2))
             csrftoken = req["post_data"]["csrfmiddlewaretoken"]
-            response = HttpResponse(auth.login())
+            response = render(auth.login())
+            response.set_cookie(key='csrftoken', value=csrftoken2)
             response.set_cookie(key='csrftoken', value=csrftoken2)
             logger.info("CSRF TOKEN VALUE {}".format(csrftoken2))
             logger.info("Django Response {}".format(response))
