@@ -1,7 +1,7 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
 from .models import User
@@ -77,6 +77,7 @@ class LoginView(View):
         logger.info("Inside GET request in LoginView")
         return render(request, "registration/login.html")
 
+    @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         logger.info("Inside POST request in LoginView")
         req = self.prepare_django_request(request)
