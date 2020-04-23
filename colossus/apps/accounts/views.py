@@ -153,7 +153,7 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
             '''
             currentUserGUID = 619
-            currentUserEmail = 'test@testmail.com'
+            currentUserEmail = 'testNew@testmail.com'
             currentUserName = 'cdt303test'
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
@@ -172,8 +172,10 @@ def ssoLogin(request):
                 newform = UserForm({
                     'username': currentUserEmail,
                     'first_name': currentUserName,
+                    'last_name': currentUserName,
                     'email': currentUserEmail,
-                    'password': currentUserGUID[::-1]
+                    'password': currentUserGUID[::-1],
+                    'timezone': 'America/New_York'
                 })
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
