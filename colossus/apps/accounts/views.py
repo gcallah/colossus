@@ -174,7 +174,7 @@ def ssoLogin(request):
                     'first_name': currentUserName,
                     'last_name': currentUserName,
                     'email': currentUserEmail,
-                    'password': currentUserGUID[::-1],
+                    'password': str(currentUserGUID)[::-1],
                     'timezone': 'America/New_York'
                 })
                 if newform.is_valid():
