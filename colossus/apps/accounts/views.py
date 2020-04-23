@@ -2,7 +2,7 @@ import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView
-from colossus.apps.accounts.forms import UserForm, AdminUserCreationForm
+from colossus.apps.accounts.forms import UserForm
 from .models import User
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.contrib.auth.decorators import login_required
@@ -146,9 +146,15 @@ def ssoLogin(request):
             logger.info("djm746 allUsers {}".format(allUsers))
             oldUser = False
             currentUser = None
-            sessionAttributes = request.session
+            # sessionAttributes = request.session
+            '''
             currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
+            currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
+            '''
+            currentUserGUID = 619
+            currentUserEmail = 'test@testmail.com'
+            currentUserName = 'cdt303test'
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
@@ -163,11 +169,11 @@ def ssoLogin(request):
             if(oldUser is False):
                 logger.info("djm746 new user")
                 logger.info("New user email : {}".format(currentUserEmail))
-                newform = AdminUserCreationForm(data={
-                                                    'username': currentUserEmail,
-                                                    'email': currentUserEmail,
-                                                    'password1': currentUserGUID[::-1],
-                                                    'password2': currentUserGUID[::-1]
+                newform = UserForm({
+                    'username': currentUserEmail,
+                    'first_name': currentUserName,
+                    'email': currentUserEmail,
+                    'password': currentUserGUID[::-1]
                 })
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")

@@ -53,4 +53,4 @@ class UserForm(forms.ModelForm):
         The is the inner class to define form fields for user (non-admins) sign-up forms.
         """
         model = User
-        fields = ('first_name', 'last_name', 'email', 'timezone')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password', 'timezone')
