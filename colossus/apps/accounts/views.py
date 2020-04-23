@@ -153,7 +153,7 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
             '''
             currentUserGUID = 619
-            currentUserEmail = 'testNew@testmail.com'
+            currentUserEmail = 'testNew1@testmail.com'
             currentUserName = 'cdt303test'
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
