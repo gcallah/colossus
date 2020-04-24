@@ -153,8 +153,8 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
             '''
             currentUserGUID = 619
-            currentUserEmail = 'testNew12@testmail.com'
-            currentUserName = 'cdt303test12'
+            currentUserEmail = 'testNew123@testmail.com'
+            currentUserName = 'cdt303test123'
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
@@ -178,7 +178,9 @@ def ssoLogin(request):
                     last_name=currentUserName
                 )
                 logger.info('Created new user')
-
+                logger.info('Logging in new user : {}'.format(currentUser))
+                login(request, currentUser)
+                logger.info('Logged in')
                 '''
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
