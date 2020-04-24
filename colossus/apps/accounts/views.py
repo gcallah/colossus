@@ -153,8 +153,8 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
             '''
             currentUserGUID = 619
-            currentUserEmail = 'testNew1@testmail.com'
-            currentUserName = 'cdt303test'
+            currentUserEmail = 'testNew12@testmail.com'
+            currentUserName = 'cdt303test12'
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
@@ -169,14 +169,17 @@ def ssoLogin(request):
             if(oldUser is False):
                 logger.info("djm746 new user")
                 logger.info("New user email : {}".format(currentUserEmail))
-                newform = UserForm({
-                    'username': currentUserEmail,
-                    'first_name': currentUserName,
-                    'last_name': currentUserName,
-                    'email': currentUserEmail,
-                    'password': str(currentUserGUID)[::-1],
-                    'timezone': 'America/New_York'
-                })
+                logger.info('Creating new user directly')
+                currentUser = User.objects.create_user(
+                    email=currentUserEmail,
+                    password=str(currentUserGUID)[::-1],
+                    username=currentUserEmail,
+                    first_name=currentUserName,
+                    last_name=currentUserName
+                )
+                logger.info('Created new user')
+
+                '''
                 if newform.is_valid():
                     logger.info("djm746 isValidForm")
                     currentUser = newform.save()
@@ -185,6 +188,7 @@ def ssoLogin(request):
                     logger.info('Logged in')
                 else:
                     logger.info("Form Error {}".format(newform.errors))
+                '''
             logger.info("Current USER DETAILS {}".format(currentUser))
 
             if 'RelayState' in req['post_data']:
