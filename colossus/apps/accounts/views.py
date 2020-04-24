@@ -146,8 +146,7 @@ def ssoLogin(request):
             logger.info("djm746 allUsers {}".format(allUsers))
             oldUser = False
             currentUser = None
-            # sessionAttributes = request.session
-            '''
+            sessionAttributes = request.session
             currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
@@ -155,6 +154,7 @@ def ssoLogin(request):
             currentUserGUID = 619
             currentUserEmail = 'testNew123@testmail.com'
             currentUserName = 'cdt303test123'
+            '''
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
@@ -181,16 +181,6 @@ def ssoLogin(request):
                 logger.info('Logging in new user : {}'.format(currentUser))
                 login(request, currentUser)
                 logger.info('Logged in')
-                '''
-                if newform.is_valid():
-                    logger.info("djm746 isValidForm")
-                    currentUser = newform.save()
-                    logger.info('Logging in new user : {}'.format(currentUser))
-                    login(request, currentUser)
-                    logger.info('Logged in')
-                else:
-                    logger.info("Form Error {}".format(newform.errors))
-                '''
             logger.info("Current USER DETAILS {}".format(currentUser))
 
             if 'RelayState' in req['post_data']:
