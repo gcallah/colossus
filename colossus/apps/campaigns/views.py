@@ -15,6 +15,7 @@ from django.views.decorators.http import require_GET
 from django.views.generic import (
     CreateView, DeleteView, DetailView, ListView, UpdateView,
 )
+from django.views.decorators.csrf import csrf_exempt
 
 from colossus.apps.core.models import Country
 from colossus.apps.lists.models import MailingList
@@ -32,6 +33,7 @@ from .models import Campaign, Email, Link
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignListView(CampaignMixin, ListView):
     """
     Provide a view to list the available campaigns
@@ -71,6 +73,7 @@ class CampaignListView(CampaignMixin, ListView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignCreateView(CampaignMixin, CreateView):
     """
     Provides a view to create campaigns
@@ -91,6 +94,7 @@ class CampaignCreateView(CampaignMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -114,6 +118,7 @@ class CampaignEditView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignDetailView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -121,6 +126,7 @@ class CampaignDetailView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignScheduledView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -132,6 +138,7 @@ class CampaignScheduledView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignRevertDraftView(View):
     def post(self, request, pk):
         campaign = get_object_or_404(Campaign, pk=pk, status=CampaignStatus.SCHEDULED)
@@ -143,6 +150,7 @@ class CampaignRevertDraftView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignPreviewView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -151,6 +159,7 @@ class CampaignPreviewView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignLinksView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -163,6 +172,7 @@ class CampaignLinksView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignReportsView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -200,6 +210,7 @@ class CampaignReportsView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignReportsLocationsView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -220,6 +231,7 @@ class CampaignReportsLocationsView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignReportsCountryView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -254,6 +266,7 @@ class CampaignReportsCountryView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditRecipientsView(CampaignMixin, UpdateView):
     model = Campaign
     form_class = CampaignRecipientsForm
@@ -279,6 +292,7 @@ def load_list_tags(request):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditNameView(CampaignMixin, UpdateView):
     model = Campaign
     fields = ('name',)
@@ -290,6 +304,7 @@ class CampaignEditNameView(CampaignMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignDeleteView(CampaignMixin, DeleteView):
     model = Campaign
     context_object_name = 'campaign'
@@ -314,6 +329,7 @@ class AbstractCampaignEmailUpdateView(CampaignMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditFromView(AbstractCampaignEmailUpdateView):
     title = _('From')
     fields = ('from_name', 'from_email',)
@@ -327,6 +343,7 @@ class CampaignEditFromView(AbstractCampaignEmailUpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditSubjectView(AbstractCampaignEmailUpdateView):
     title = _('Subject')
     fields = ('subject', 'preview',)
@@ -339,6 +356,7 @@ class CampaignEditSubjectView(AbstractCampaignEmailUpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CampaignEditTemplateView(AbstractCampaignEmailUpdateView):
     title = _('Template')
     fields = ('template',)
@@ -352,6 +370,7 @@ class CampaignEditTemplateView(AbstractCampaignEmailUpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SendCampaignCompleteView(CampaignMixin, DetailView):
     model = Campaign
     context_object_name = 'campaign'
@@ -359,6 +378,7 @@ class SendCampaignCompleteView(CampaignMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ScheduleCampaignView(CampaignMixin, UpdateView):
     model = Campaign
     context_object_name = 'campaign'
@@ -374,6 +394,7 @@ class ScheduleCampaignView(CampaignMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class LinkUpdateView(SuccessMessageMixin, CampaignMixin, UpdateView):
     model = Link
     fields = ('url',)
