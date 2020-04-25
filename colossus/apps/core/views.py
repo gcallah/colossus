@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.generic import UpdateView
+from django.views.decorators.csrf import csrf_exempt
 
 from colossus.apps.accounts.forms import AdminUserCreationForm
 from colossus.apps.campaigns.constants import CampaignStatus
@@ -21,6 +22,7 @@ User = get_user_model()
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SiteUpdateView(UpdateView):
     model = Site
     fields = ('name', 'domain',)
@@ -32,6 +34,7 @@ class SiteUpdateView(UpdateView):
 
 
 @login_required
+@csrf_exempt
 def dashboard(request):
     campaigns = Campaign.objects.filter(status=CampaignStatus.DRAFT)
     activities = Activity.objects \
