@@ -17,6 +17,7 @@ from django.views.generic import (
     CreateView, DeleteView, DetailView, FormView, ListView, TemplateView,
     UpdateView, View,
 )
+from django.views.decorators.csrf import csrf_exempt
 
 from colossus.apps.core.models import Country
 from colossus.apps.subscribers.constants import (
@@ -42,6 +43,7 @@ from .models import MailingList, SubscriberImport
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class MailingListListView(ListView):
     model = MailingList
     context_object_name = 'mailing_lists'
@@ -55,6 +57,7 @@ class MailingListListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class MailingListCreateView(CreateView):
     model = MailingList
     fields = ('name', 'slug', 'campaign_default_from_name', 'campaign_default_from_email', 'website_url')
@@ -65,6 +68,7 @@ class MailingListCreateView(CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class MailingListDetailView(DetailView):
     model = MailingList
     context_object_name = 'mailing_list'
@@ -107,6 +111,7 @@ class MailingListDetailView(DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class MailingListCountryReportView(MailingListMixin, DetailView):
     model = MailingList
     context_object_name = 'mailing_list'
@@ -133,6 +138,7 @@ class MailingListCountryReportView(MailingListMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberListView(MailingListMixin, ListView):
     model = Subscriber
     context_object_name = 'subscribers'
@@ -168,6 +174,7 @@ class SubscriberListView(MailingListMixin, ListView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberCreateView(MailingListMixin, CreateView):
     model = Subscriber
     fields = ('email', 'name')
@@ -182,6 +189,7 @@ class SubscriberCreateView(MailingListMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberDetailView(MailingListMixin, DetailView):
     model = Subscriber
     pk_url_kwarg = 'subscriber_pk'
@@ -190,6 +198,7 @@ class SubscriberDetailView(MailingListMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberUpdateView(MailingListMixin, UpdateView):
     model = Subscriber
     fields = '__all__'
@@ -201,6 +210,7 @@ class SubscriberUpdateView(MailingListMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberDeleteView(MailingListMixin, DeleteView):
     model = Subscriber
     pk_url_kwarg = 'subscriber_pk'
@@ -212,6 +222,7 @@ class SubscriberDeleteView(MailingListMixin, DeleteView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ImportSubscribersView(MailingListMixin, TemplateView):
     template_name = 'lists/import_subscribers.html'
 
@@ -221,6 +232,7 @@ class ImportSubscribersView(MailingListMixin, TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class PasteEmailsImportSubscribersView(MailingListMixin, FormView):
     template_name = 'lists/import_subscribers_form.html'
     form_class = PasteImportSubscribersForm
@@ -237,6 +249,7 @@ class PasteEmailsImportSubscribersView(MailingListMixin, FormView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriptionFormsView(MailingListMixin, TemplateView):
     template_name = 'lists/subscription_forms.html'
 
@@ -261,6 +274,7 @@ class TagMixin:
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class TagListView(TagMixin, MailingListMixin, ListView):
     context_object_name = 'tags'
     paginate_by = 100
@@ -297,6 +311,7 @@ class BulkTagSubscribersView(LoginRequiredMixin, TagMixin, MailingListMixin, For
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class TagCreateView(TagMixin, MailingListMixin, CreateView):
     fields = ('name', 'description')
     context_object_name = 'tag'
@@ -311,6 +326,7 @@ class TagCreateView(TagMixin, MailingListMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class TagUpdateView(SuccessMessageMixin, TagMixin, MailingListMixin, UpdateView):
     fields = ('name', 'description')
     context_object_name = 'tag'
@@ -322,6 +338,7 @@ class TagUpdateView(SuccessMessageMixin, TagMixin, MailingListMixin, UpdateView)
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class TagDeleteView(TagMixin, MailingListMixin, DeleteView):
     context_object_name = 'tag'
     template_name = 'lists/tag_confirm_delete.html'
@@ -331,6 +348,7 @@ class TagDeleteView(TagMixin, MailingListMixin, DeleteView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class AbstractSettingsView(UpdateView):
     model = MailingList
     context_object_name = 'mailing_list'
@@ -376,6 +394,7 @@ class SMTPCredentialsView(AbstractSettingsView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class FormsEditorView(MailingListMixin, TemplateView):
     template_name = 'lists/forms_editor.html'
 
@@ -387,6 +406,7 @@ class FormsEditorView(MailingListMixin, TemplateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriptionFormTemplateUpdateView(FormTemplateMixin, MailingListMixin, UpdateView):
     model = SubscriptionFormTemplate
     context_object_name = 'form_template'
@@ -408,6 +428,7 @@ class SubscriptionFormTemplateUpdateView(FormTemplateMixin, MailingListMixin, Up
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ResetFormTemplateView(FormTemplateMixin, MailingListMixin, View):
     def post(self, request: HttpRequest, pk: int, form_key: str):
         form_template = self.get_object()
@@ -417,6 +438,7 @@ class ResetFormTemplateView(FormTemplateMixin, MailingListMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class PreviewFormTemplateView(FormTemplateMixin, MailingListMixin, View):
     def post(self, request, pk, form_key):
         self.form_template = self.get_object()
@@ -431,6 +453,7 @@ class PreviewFormTemplateView(FormTemplateMixin, MailingListMixin, View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomizeDesignView(UpdateView):
     model = MailingList
     fields = ('forms_custom_css', 'forms_custom_header')
@@ -446,6 +469,7 @@ class CustomizeDesignView(UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberImportView(MailingListMixin, CreateView):
     model = SubscriberImport
     fields = ('file',)
@@ -467,6 +491,7 @@ class SubscriberImportView(MailingListMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberImportPreviewView(MailingListMixin, UpdateView):
     model = SubscriberImport
     form_class = ConfirmSubscriberImportForm
@@ -482,6 +507,7 @@ class SubscriberImportPreviewView(MailingListMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberImportQueuedView(MailingListMixin, DetailView):
     model = SubscriberImport
     template_name = 'lists/import_queued.html'
@@ -490,6 +516,7 @@ class SubscriberImportQueuedView(MailingListMixin, DetailView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriberImportDeleteView(MailingListMixin, DeleteView):
     model = SubscriberImport
     pk_url_kwarg = 'import_pk'
@@ -514,21 +541,25 @@ class ChartView(View):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class SubscriptionsSummaryChartView(ChartView):
     chart_class = SubscriptionsSummaryChart
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ListDomainsChartView(ChartView):
     chart_class = ListDomainsChart
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ListLocationsChartView(ChartView):
     chart_class = ListLocationsChart
 
 
 @login_required
+@csrf_exempt
 def download_subscriber_import(request, pk, import_pk):
     subscriber_import = get_object_or_404(SubscriberImport, pk=import_pk, mailing_list_id=pk)
     filename = subscriber_import.file.name.split('/')[-1]
