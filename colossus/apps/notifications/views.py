@@ -12,6 +12,7 @@ from colossus.apps.notifications.models import Notification
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class NotificationListView(ListView):
     """
     A class to display all the notifications in list view.
@@ -31,6 +32,7 @@ class NotificationListView(ListView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class NotificationDetailView(DetailView):
     """
     A class to display the notification in detailed view.
@@ -50,6 +52,7 @@ class NotificationDetailView(DetailView):
 
 
 @login_required
+@csrf_exempt
 def unread(request):
     """
     A function to mark the notification as seen after the user has seen it.
