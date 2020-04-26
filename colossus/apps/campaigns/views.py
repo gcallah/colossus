@@ -275,6 +275,7 @@ class CampaignEditRecipientsView(CampaignMixin, UpdateView):
 
 
 @login_required
+@csrf_exempt
 def load_list_tags(request):
     list_id = request.GET.get('id')
 
@@ -418,6 +419,7 @@ class LinkUpdateView(SuccessMessageMixin, CampaignMixin, UpdateView):
 
 
 @login_required
+@csrf_exempt
 def campaign_edit_content(request, pk):
     campaign = get_object_or_404(Campaign, pk=pk)
 
@@ -441,6 +443,7 @@ def campaign_edit_content(request, pk):
 
 
 @login_required
+@csrf_exempt
 def campaign_test_email(request, pk):
     campaign = get_object_or_404(Campaign, pk=pk)
     if request.method == 'POST':
@@ -458,6 +461,7 @@ def campaign_test_email(request, pk):
 
 
 @login_required
+@csrf_exempt
 def campaign_preview_email(request, pk):
     campaign = get_object_or_404(Campaign, pk=pk)
     email = campaign.email
@@ -479,6 +483,7 @@ def campaign_preview_email(request, pk):
 
 
 @login_required
+@csrf_exempt
 def send_campaign(request, pk):
     campaign = get_object_or_404(Campaign, pk=pk)
 
@@ -497,6 +502,7 @@ def send_campaign(request, pk):
 
 @require_GET
 @login_required
+@csrf_exempt
 def replicate_campaign(request, pk):
     campaign = get_object_or_404(Campaign, pk=pk)
     replicated_campaign = campaign.replicate()
