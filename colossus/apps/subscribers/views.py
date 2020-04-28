@@ -88,6 +88,7 @@ def subscribe(request, mailing_list_uuid):
     })
 
 
+@csrf_exempt
 @require_GET
 def confirm_subscription(request, mailing_list_uuid):
     mailing_list = get_object_or_404(MailingList, uuid=mailing_list_uuid)
@@ -102,6 +103,7 @@ def confirm_subscription(request, mailing_list_uuid):
     })
 
 
+@csrf_exempt
 @require_GET
 def confirm_double_optin_token(request, mailing_list_uuid, token):
     try:
@@ -128,6 +130,7 @@ def confirm_double_optin_token(request, mailing_list_uuid, token):
     })
 
 
+@csrf_exempt
 @require_http_methods(['GET', 'POST'])
 @ratelimit(key=ip_address_key, rate='5/5m', method='POST')
 def unsubscribe_manual(request, mailing_list_uuid):
@@ -158,6 +161,7 @@ def unsubscribe_manual(request, mailing_list_uuid):
     })
 
 
+@csrf_exempt
 @require_GET
 @ratelimit(key=ip_address_key, rate='5/5m', method='GET', block=True)
 def unsubscribe(request, mailing_list_uuid, subscriber_uuid, campaign_uuid):
@@ -194,6 +198,7 @@ def goodbye(request, mailing_list_uuid):
     })
 
 
+@csrf_exempt
 @require_GET
 @ratelimit(key=ip_address_key, rate='100/h', method='GET', block=True)
 def track_open(request, email_uuid, subscriber_uuid):
@@ -209,6 +214,7 @@ def track_open(request, email_uuid, subscriber_uuid):
     return HttpResponse(pixel, content_type='image/png')
 
 
+@csrf_exempt
 @require_GET
 @ratelimit(key=ip_address_key, rate='100/h', method='GET', block=True)
 def track_click(request: HttpRequest,
