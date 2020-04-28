@@ -14,8 +14,6 @@ class AccountsLoginRequiredTests(TestCase):
     """
     def test_redirection(self):
         patterns = [
-            'password_change',
-            'password_change_done',
             'profile'
         ]
         for url_name in patterns:
