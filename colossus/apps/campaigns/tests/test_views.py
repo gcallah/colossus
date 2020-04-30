@@ -8,7 +8,6 @@ from unittest import skip
 from .factories import CampaignFactory
 
 
-@skip("Failing because SAML config cannot be found on Travis.")
 class CampaignsLoginRequiredTests(TestCase):
     """
     Test if all the urls from campaign's app are protected with login_required decorator
