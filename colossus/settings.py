@@ -168,15 +168,13 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.
 
 EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
 
-EMAIL_USE_SSL = config('EMAIL_USE_SSL', default=True, cast=bool)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
-EMAIL_PORT = config('EMAIL_PORT', default=465, cast=int)
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='colossuspythonanywhere@gmail.com')
 
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='colossus@12345')
 
 
 # ==============================================================================
