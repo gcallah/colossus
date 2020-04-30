@@ -4,7 +4,6 @@ from colossus.apps.campaigns.models import Campaign
 from colossus.apps.lists.tests.factories import MailingListFactory
 from colossus.apps.subscribers.tests.factories import TagFactory
 from colossus.test.testcases import AuthenticatedTestCase, TestCase
-from unittest import skip
 from .factories import CampaignFactory
 
 
