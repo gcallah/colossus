@@ -2,10 +2,8 @@ from django.urls import resolve, reverse
 
 from colossus.apps.core import views
 from colossus.test.testcases import AuthenticatedTestCase, TestCase
-from unittest import skip
 
 
-@skip("Failing because SAML config cannot be found on Travis.")
 class CoreLoginRequiredTests(TestCase):
     """
     Test if all the urls from core's app are protected with login_required decorator

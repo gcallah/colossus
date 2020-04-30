@@ -7,10 +7,8 @@ from colossus.apps.accounts.models import User
 from colossus.apps.notifications.models import Notification
 from colossus.apps.notifications.tests.factories import NotificationFactory
 from colossus.test.testcases import AuthenticatedTestCase, TestCase
-from unittest import skip
 
 
-@skip("Failing because SAML config cannot be found on Travis.")
 class NotificationsLoginRequiredTests(TestCase):
     """
     Test if all the urls from notifications' app are protected with
