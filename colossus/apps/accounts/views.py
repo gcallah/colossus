@@ -13,6 +13,7 @@ from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
+from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
 
 
@@ -222,9 +223,14 @@ def ssoLogin(request):
     logger.info("Success Slo : {}".format(success_slo))
     logger.info("Attributes : {}".format(attributes))
     logger.info("Paint Loout : {}".format(paint_logout))
-    return render(request, "registration/login.html",
-                  {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
-                   "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
+
+    csrftoken = get_token(request)
+    logger.info("ANOTHER CSRF TOKEN VALUE {}".format(csrftoken))
+    response = render(request, "registration/login.html",
+                      {"errors": errors, "error_reason": error_reason, "not_auth_warn": not_auth_warn,
+                       "success_slo": success_slo, "attributes": attributes, "paint_logout": paint_logout})
+    response.set_cookie(key='csrftoken', value=csrftoken)
+    return response
 
 
 def metadata(request):
