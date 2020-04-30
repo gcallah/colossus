@@ -1,6 +1,6 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm
 from .models import User
