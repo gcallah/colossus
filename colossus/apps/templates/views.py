@@ -8,7 +8,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.views.generic.base import ContextMixin
-# from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 
 from .forms import EmailTemplateForm
 from .models import EmailTemplate
@@ -21,7 +21,7 @@ class EmailTemplateMixin(ContextMixin):
 
 
 @method_decorator(login_required, name='dispatch')
-# @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class EmailTemplateListView(EmailTemplateMixin, ListView):
     model = EmailTemplate
     context_object_name = 'templates'
@@ -45,7 +45,7 @@ class EmailTemplateListView(EmailTemplateMixin, ListView):
 
 
 @method_decorator(login_required, name='dispatch')
-# @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class EmailTemplateCreateView(EmailTemplateMixin, CreateView):
     model = EmailTemplate
     context_object_name = 'email_template'
@@ -53,7 +53,7 @@ class EmailTemplateCreateView(EmailTemplateMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
-# @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class EmailTemplateUpdateView(EmailTemplateMixin, UpdateView):
     model = EmailTemplate
     context_object_name = 'email_template'
@@ -61,7 +61,7 @@ class EmailTemplateUpdateView(EmailTemplateMixin, UpdateView):
 
 
 @method_decorator(login_required, name='dispatch')
-# @method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class EmailTemplateDeleteView(EmailTemplateMixin, DeleteView):
     model = EmailTemplate
     context_object_name = 'email_template'
@@ -69,7 +69,7 @@ class EmailTemplateDeleteView(EmailTemplateMixin, DeleteView):
 
 
 @login_required
-# @csrf_exempt
+@csrf_exempt
 def email_template_editor(request, pk):
     email_template = get_object_or_404(EmailTemplate, pk=pk)
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def email_template_editor(request, pk):
 
 
 @login_required
-# @csrf_exempt
+@csrf_exempt
 def email_template_preview(request, pk):
     email_template = get_object_or_404(EmailTemplate, pk=pk)
     if request.method == 'POST':
@@ -104,7 +104,7 @@ def email_template_preview(request, pk):
 
 @require_POST
 @login_required
-# @csrf_exempt
+@csrf_exempt
 def email_template_autosave(request, pk):
     data = {'valid': False}
     status_code = 200
