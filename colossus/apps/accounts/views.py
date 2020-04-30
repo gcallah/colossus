@@ -95,10 +95,6 @@ def ssoLogin(request):
             target_url = '/'
         return HttpResponseRedirect(auth.login(return_to=target_url))
 
-    elif 'sso2' in req['get_data']:
-        return_to = OneLogin_Saml2_Utils.get_self_url(req) + reverse('attrs')
-        return HttpResponseRedirect(auth.login(return_to))
-
     elif "slo" in req["get_data"]:
         logger.info("Inside SLO")
         name_id = session_index = name_id_format = name_id_nq = name_id_spnq = None

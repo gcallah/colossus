@@ -8,7 +8,6 @@ urlpatterns = [
     path('saml', views.ssoLogin, name="sso_login"),
     path('attrs/', views.attributes, name="attrs"),
     path('metadata/', views.metadata, name="metadata"),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('password-change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password-change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
 
