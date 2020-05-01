@@ -154,7 +154,7 @@ def ssoLogin(request):
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
                     if(u.get_username() == "dgtadmin@records.nyc.gov"):
-                        u.delete()
+                        u.first_name = currentUserName
                     if(u.get_username() == currentUserEmail):
                         logger.info("User {} found".format(currentUserGUID))
                         login(request, u)
