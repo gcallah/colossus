@@ -153,7 +153,7 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
 
             if currentUserEmail not in constants.permittedUserAccounts:
-                return HttpResponseRedirect(reverse('accounts:sso_login'))
+                return HttpResponseRedirect(reverse('sso_login'))
 
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
