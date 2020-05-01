@@ -15,7 +15,7 @@ from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
 from django.middleware.csrf import get_token
-from . import constants
+from colossus.constants import AUTHORIZED_USERS_FILE_PATH
 logger = logging.getLogger(__name__)
 
 
@@ -71,6 +71,13 @@ def initialize_saml(request):
     logger.info("Inside Initialize SAML")
     auth = OneLogin_Saml2_Auth(request, custom_base_path=settings.SAML_FOLDER)
     return auth
+
+
+def __is_user_authorized(current_user_email):
+    with open(AUTHORIZED_USERS_FILE_PATH) as file:
+        if any(user_email.strip() == current_user_email.strip() for user_email in file):
+            return(True)
+        return(False)
 
 
 @csrf_exempt
@@ -152,7 +159,7 @@ def ssoLogin(request):
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
 
-            if currentUserEmail not in constants.permittedUserAccounts:
+            if not __is_user_authorized(currentUserEmail):
                 return HttpResponseRedirect(reverse('sso_login'))
 
             if allUsers is not None:
