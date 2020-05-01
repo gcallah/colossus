@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm
 from .models import User
+from django.utils.decorators import method_decorator
 from django.http import (HttpResponse, HttpResponseRedirect, HttpResponseServerError)
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -17,6 +18,8 @@ from django.middleware.csrf import get_token
 logger = logging.getLogger(__name__)
 
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class ProfileView(LoginRequiredMixin, UpdateView):
     """
     This is the class for displaying the user profile.
