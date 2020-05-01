@@ -1,6 +1,6 @@
 import logging
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import UpdateView
 from colossus.apps.accounts.forms import UserForm
 from .models import User
@@ -15,6 +15,7 @@ from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
 from django.contrib.auth import get_user_model, login, logout
 from django.middleware.csrf import get_token
+from . import constants
 logger = logging.getLogger(__name__)
 
 
@@ -150,6 +151,9 @@ def ssoLogin(request):
             currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
+
+            if currentUserEmail not in constants.permittedUserAccounts:
+                return HttpResponseRedirect(reverse('accounts:sso_login'))
 
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
