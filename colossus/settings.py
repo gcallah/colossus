@@ -232,7 +232,7 @@ CELERY_BROKER_URL = config('CELERY_BROKER_URL', default='amqp://localhost')
 CELERY_BEAT_SCHEDULE = {
     'send-scheduled-campaigns': {
         'task': 'colossus.apps.campaigns.tasks.send_scheduled_campaigns_task',
-        'schedule': 60.0
+        'schedule': crontab(minute=1)
     },
     'clean-lists-hard-bounces': {
         'task': 'colossus.apps.lists.tasks.clean_lists_hard_bounces_task',

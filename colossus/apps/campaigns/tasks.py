@@ -30,8 +30,14 @@ def send_campaign_task(campaign_id):
 
 @shared_task
 def send_scheduled_campaigns_task():
+    logger.info("Inside SEND SCHEDULE CAMPAIGN TASK")
+    logger.info("Campaign Status {}".format(CampaignStatus.SCHEDULED))
+    logger.info("Timezone now {}".format(timezone.now()))
     Campaign = apps.get_model('campaigns', 'Campaign')
+    for c in Campaign.objects.all():
+        logger.info("Normal Campaigns {}".format(c.send_date))
     campaigns = Campaign.objects.filter(status=CampaignStatus.SCHEDULED, send_date__gte=timezone.now())
+    logger.info("Filtered Campaigns {}".format(campaigns))
     if campaigns.exists():
         for campaign in campaigns:
             campaign.send()
