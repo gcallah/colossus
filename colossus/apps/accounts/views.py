@@ -147,16 +147,14 @@ def ssoLogin(request):
             currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
-            '''
-            currentUserGUID = 619
-            currentUserEmail = 'testNew123@testmail.com'
-            currentUserName = 'cdt303test123'
-            '''
+
             if allUsers is not None:
                 logger.info("djm746 inside allUsers is not None")
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
+                    if(u.get_username() == "dgtadmin@records.nyc.gov"):
+                        u.delete()
                     if(u.get_username() == currentUserEmail):
                         logger.info("User {} found".format(currentUserGUID))
                         login(request, u)
@@ -182,8 +180,6 @@ def ssoLogin(request):
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
-                # if OneLogin_Saml2_Utils.get_self_url(req) != req['post_data']['RelayState']:
-                # logger.info("Inside Inside Relay State")
                 return HttpResponseRedirect(auth.redirect_to(req['post_data']['RelayState']))
         elif auth.get_settings().is_debug_active():
             logger.info("Is Debug Active")
