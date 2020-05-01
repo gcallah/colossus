@@ -14,3 +14,4 @@ requests==2.21.0
 django-tinymce
 python3-saml==1.9.0
 django-celery-beat==2.0.0
+rabbitmq==0.2.0
