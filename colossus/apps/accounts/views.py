@@ -153,8 +153,6 @@ def ssoLogin(request):
                 for u in allUsers.objects.all():
                     logger.info("djm746 inside allUsers")
                     logger.info("USER DETAILS {}".format(u.get_username()))
-                    if(u.get_username() == "dgtadmin@records.nyc.gov"):
-                        u.first_name = currentUserName
                     if(u.get_username() == currentUserEmail):
                         logger.info("User {} found".format(currentUserGUID))
                         login(request, u)
