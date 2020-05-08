@@ -3,19 +3,13 @@ import logging
 from django.apps import apps
 from django.core.mail import mail_managers
 from django.utils import timezone
-import os
-from celery import shared_task, Celery
+
+from celery import shared_task
 
 from .api import send_campaign
 from .constants import CampaignStatus
 
 logger = logging.getLogger(__name__)
-
-logger.info("Inside Tasks File")
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project.settings')
-app = Celery("tasks")
-app.config_from_object('django.conf:settings', namespace="CELERY")
-app.autodiscover_tasks()
 
 
 @shared_task

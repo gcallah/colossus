@@ -156,7 +156,10 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
 
             if not __is_user_authorized(currentUserEmail):
-                return HttpResponseRedirect(reverse('sso_login'))
+                errors = ['User Not Authorized']
+                error_reason = "The user {} is not authorized to log into the app." \
+                               "Add the user to the authorized users file.".format(currentUserEmail)
+                return HttpResponseRedirect(reverse('sso_login')+"?slo")
 
             user = User.objects.filter(email=currentUserEmail).first()
             if user is None:
