@@ -13,7 +13,7 @@ from django.shortcuts import render
 from onelogin.saml2.auth import OneLogin_Saml2_Auth
 from onelogin.saml2.utils import OneLogin_Saml2_Utils
 from onelogin.saml2.settings import OneLogin_Saml2_Settings
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import login, logout
 from django.middleware.csrf import get_token
 from colossus.constants import AUTHORIZED_USERS_FILE_PATH
 logger = logging.getLogger(__name__)
@@ -150,10 +150,6 @@ def ssoLogin(request):
             logger.info("Printing Session data {} ".format(request.session.items()))
             logger.info("Relay state : {}".format(req['post_data']['RelayState']))
             logger.info("Self URL : {}".format(OneLogin_Saml2_Utils.get_self_url(req)))
-            allUsers = get_user_model()
-            logger.info("djm746 allUsers {}".format(allUsers))
-            oldUser = False
-            currentUser = None
             sessionAttributes = request.session
             currentUserGUID = sessionAttributes["samlUserdata"]["GUID"][0]
             currentUserEmail = sessionAttributes["samlUserdata"]["mail"][0]
@@ -162,33 +158,19 @@ def ssoLogin(request):
             if not __is_user_authorized(currentUserEmail):
                 return HttpResponseRedirect(reverse('sso_login'))
 
-            if allUsers is not None:
-                logger.info("djm746 inside allUsers is not None")
-                for u in allUsers.objects.all():
-                    logger.info("djm746 inside allUsers")
-                    logger.info("USER DETAILS {}".format(u.get_username()))
-                    if(u.get_username() == currentUserEmail):
-                        logger.info("User {} found".format(currentUserGUID))
-                        login(request, u)
-                        oldUser = True
-                        currentUser = u
-                        break
-            if(oldUser is False):
-                logger.info("djm746 new user")
-                logger.info("New user email : {}".format(currentUserEmail))
-                logger.info('Creating new user directly')
-                currentUser = User.objects.create_user(
+            user = User.objects.filter(email=currentUserEmail).first()
+            if user is None:
+                logger.info('User not found. Creating new user.')
+                user = User.objects.create_user(
                     email=currentUserEmail,
                     password=str(currentUserGUID)[::-1],
                     username=currentUserEmail,
                     first_name=currentUserName,
                     last_name=currentUserName
                 )
-                logger.info('Created new user')
-                logger.info('Logging in new user : {}'.format(currentUser))
-                login(request, currentUser)
-                logger.info('Logged in')
-            logger.info("Current USER DETAILS {}".format(currentUser))
+            logger.info("Logging in user {}".format(currentUserEmail))
+            login(request, user)
+            logger.info('Logged in')
 
             if 'RelayState' in req['post_data']:
                 logger.info("Inside Relay State")
