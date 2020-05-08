@@ -159,9 +159,10 @@ def ssoLogin(request):
             if not __is_user_authorized(currentUserEmail):
                 logger.info('Unauthorized login from username ' + currentUserName +
                             ' with email-id: ' + currentUserEmail)
-                auth_failure_msg = "The user: {} is not authorized to log into the app. Clear the NYC " \
-                                   "ID cookie and try again with an authorized user".format(currentUserEmail)
-                return render(request, 'registration/login.html', {'auth_failure_msg': auth_failure_msg})
+                errors = ['User Not Authorized']
+                error_reason = "The user {} is not authorized to log into the app." \
+                               "Add the user to the authorized users file.".format(currentUserEmail)
+                return HttpResponseRedirect(reverse('sso_login')+"?slo")
 
             user = User.objects.filter(email=currentUserEmail).first()
             if user is None:

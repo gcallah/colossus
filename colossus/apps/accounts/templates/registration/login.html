@@ -6,9 +6,6 @@
   <div class="col-sm-8 col-md-6 col-lg-4">
     <div class="card my-2">
       <div class="card-body">
-        {% if auth_failure_msg %}
-            <h5> {{ auth_failure_msg }} </h5>
-        {% endif %}
         <h4 class="card-title">{% trans 'Log in to your account' %}</h4>
         <form method="post" action="{% url 'sso_login' %}?sso">
             {% csrf_token %}
