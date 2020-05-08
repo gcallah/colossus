@@ -103,7 +103,7 @@ def ssoLogin(request):
         if 'next' in request.POST:
             target_url = req['post_data']['next']
         else:
-            target_url = '/'
+            target_url = reverse('dashboard')
         return HttpResponseRedirect(auth.login(return_to=target_url))
 
     elif "slo" in req["get_data"]:
@@ -123,9 +123,10 @@ def ssoLogin(request):
 
         logout(request)
         logger.info("Logged out!")
+        target_url = reverse('dashboard')
         return HttpResponseRedirect(
-            auth.logout(name_id=name_id, session_index=session_index, nq=name_id_nq, name_id_format=name_id_format,
-                        spnq=name_id_spnq))
+            auth.logout(return_to=target_url, name_id=name_id, session_index=session_index, nq=name_id_nq,
+                        name_id_format=name_id_format, spnq=name_id_spnq))
 
     elif "acs" in req["get_data"]:
         logger.info("Inside ACS")
@@ -156,6 +157,8 @@ def ssoLogin(request):
             currentUserName = sessionAttributes["samlUserdata"]["givenName"][0]
 
             if not __is_user_authorized(currentUserEmail):
+                logger.info('Unauthorized login from username ' + currentUserName +
+                            ' with email-id: ' + currentUserEmail)
                 errors = ['User Not Authorized']
                 error_reason = "The user {} is not authorized to log into the app." \
                                "Add the user to the authorized users file.".format(currentUserEmail)
@@ -188,7 +191,9 @@ def ssoLogin(request):
         if "LogoutRequestID" in request.session:
             logger.info("Inside LogoutRequestID")
             request_id = request.session["LogoutRequestID"]
-        dscb = request.session.flush()
+
+        def dscb(): request.session.flush()
+
         url = auth.process_slo(request_id=request_id, delete_session_cb=dscb)
         errors = auth.get_errors()
         if len(errors) == 0:
