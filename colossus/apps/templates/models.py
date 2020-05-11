@@ -19,7 +19,20 @@ class EmailTemplateManager(models.Manager):
 
 class EmailTemplate(models.Model):
     name = models.CharField(_('name'), max_length=100)
-    content = HTMLField(default='Please enter your contents here!')
+    email_template_content = (
+        '<!doctype html>'
+        '<html>'
+        '<body>'
+        '{% block content %}'
+        '{% endblock %}'
+        '{% block footer %}'
+        '<div><br></div>'
+        '<div><small><a href="{{ unsub }}">Unsubscribe from this list</a>.</small></div>'
+        '{% endblock %}'
+        '</body>'
+        '</html>'
+    )
+    content = HTMLField(default=email_template_content)
     create_date = models.DateTimeField(_('create date'), auto_now_add=True)
     update_date = models.DateTimeField(_('update date'), default=timezone.now)
     last_used_date = models.DateTimeField(_('last used'), null=True, blank=True)
