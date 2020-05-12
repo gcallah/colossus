@@ -25,7 +25,7 @@
             <li>Store newsletter statistics (delivery success / failures) </li>
             Completed: Dashboard module
             <li>Ability to provide attachments (custom or single attachment)</li>
-            Completed: Campaigns module
+            <i>Not Completed</i>
             <li>Provide contact list management features (add, edit, remove contacts) </li>
             Completed: List module
             <li>Includes the ability to manage multiple contact lists</li>
@@ -39,17 +39,16 @@
         <ul>
 
             <li>Login with NYC.ID (SAML 2.0 Identity Provider)</li>
-            Not Implemented: Configuration is completed
+            Completed: Core logic in accounts app
             <li>Permissions for sending, managing contact list, and editing / creating newsletters</li>
         </ul>
 
     <h2>Feature Overview</h2>
         <ul>
 
-            <li>Login (currently):</li>
+            <li>Login (using SAML 2.0):</li>
 
-            Verify by username and password</br>
-            Use registered email address to reset the password
+            Using NYC.ID Server to authenticate users.</br>
 
             <li>Dashboard Activity:</li>
 
@@ -103,6 +102,8 @@
             /instance/saml/advanced_settings.json.example
             <li>SAML Settings in Project</li>
             /colossus/settings.py
+            <li>Public/Private Certificate</li>
+            /instance/saml/certs/
 
             
         </ul>
@@ -111,18 +112,14 @@
         <ul>
 
             <li>
-                <a href="https://github.com/fangli/django-saml2-auth">https://github.com/fangli/django-saml2-auth</a> <br>
-                An example of saml2 authentication with django.
+                <a href="https://github.com/onelogin/python3-saml">https://github.com/onelogin/python3-saml</a> <br>
+                Library for SAML authentication with django.
             </li>
 
             <li>
-                <a href="https://github.com/onelogin/python-saml">https://github.com/onelogin/python-saml</a> <br>
-                Another example of saml authentication with django.
-            </li>
-
-            <li>
-                <a href="https://developers.onelogin.com/saml/python">https://developers.onelogin.com/saml/python</a> <br>
-                Offcial set up document of SAML onelogin that NYC uses.
+                <a href = "https://github.com/CityOfNewYork/NYCOpenRecords"> https://github.com/CityOfNewYork/NYCOpenRecords</a>
+            </br>
+                Reference for SAML Configurations.
             </li>
 
             <li>People to Contact: Joel Castillo (jocastillo@records.nyc.gov)
@@ -134,21 +131,17 @@
     <h2>Others</h2>
         <ul>
 
-            <li>Database login module: /colossus/apps/accounts</li>
-            <li>Database signup module: /colossus/apps/core</li>
-
+            <li>Database auth module: /colossus/apps/accounts</li>
 			<li>Use django's default django.contrib.auth. </br>
-			E.g. auth_views.LoginView.as_view()</li>     
+			    
         </ul>
 
     <h2>What to do</h2>
         <ul>
 
-            <li>Eliminate django.contrib.auth in apps/accounts/urls.py</li>
-            <li>Replace db models with saml_auth in accounts/models.py</li>
-            <li>Replace account model in accounts/views.py</li>
-            <li>Eliminate current forms in apps/accounts/forms.py</li>
-			<li>Eliminate django.contrib.auth in apps/core/urls.py</li>     
+            <li>Ability to provide attachments (custom or single attachment)</li>
+                In Campaign Module
+   
         </ul>
 
     </body>
